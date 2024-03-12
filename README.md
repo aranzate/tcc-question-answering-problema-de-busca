@@ -1,6 +1,6 @@
 ## Necessário utilizar o ElasticSearch no Docker
 
-Tutorial: https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html
+Tutorial: [https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html](https://www.elastic.co/guide/en/elasticsearch/reference/current/run-elasticsearch-locally.html)
 
 Coloque as credenciais geradas pela instalação do ES no Docker, no .env
 
