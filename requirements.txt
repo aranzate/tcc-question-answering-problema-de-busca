@@ -1,1 +1,3 @@
 pip install python-dotenv
+pip install elasticsearch
+pip install -U matplotlib
