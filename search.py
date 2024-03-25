@@ -41,4 +41,10 @@ class Search:
             operations.append({'index': {'_index': index}})
             operations.append(document) 
         return self.es.bulk(operations=operations) #insere vários documentos em uma única chamada de api
+    
+    def search(self, index, **query_args):
+        return self.es.search(index=index, **query_args)
+
+    def retrieve_document(self, index, id):
+        return self.es.get(index=index, id=id)
 
