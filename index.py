@@ -27,13 +27,5 @@ class Index:
         with open(file_path, 'r', encoding='utf-8') as json_file:
             data = json.load(json_file)[array_name]
             
-        # Modificar data para incluir IDs
-        indexed_data = []
-        for idx, item in enumerate(data):
-            # Adicionar um ID para cada documento (pode ser qualquer lógica que você preferir)
-            item['_id'] = idx + 1  # Aqui estou usando os índices baseados em 1 como ID
-            
-            indexed_data.append(item)
-            
-        calculate_function_execution_time(self.es.insert_documents, self.index, indexed_data)
+        calculate_function_execution_time(self.es.insert_documents, self.index, data)
         

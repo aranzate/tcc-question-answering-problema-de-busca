@@ -7,6 +7,10 @@ from pprint import pprint
 import matplotlib.pyplot as plt
 import numpy as np
 
+from datetime import datetime
+import time
+from benchmark_recorder import calculate_action_execution_time, calculate_function_execution_time
+
 load_dotenv()
 
 class Search:
@@ -27,23 +31,6 @@ class Search:
         client_info = self.es.info()
         print('Connected to Elasticsearch!')
         # pprint(client_info.body)
-
-    # Deleta e cria um novo índice de nome <index>
-    def create_index(self, index):
-        self.es.indices.delete(index=index, ignore_unavailable=True) 
-        self.es.indices.create(index=index) 
-
-    # Insere um documento em um indice e retorna resposta do elastic search
-    def insert_document(self, index, body, id):
-        return self.es.index(index=index, body=body, id=id) 
-    
-    # Insere vários documentos no índice de uma vez
-    def insert_documents(self, index, documents):
-        operations = []
-        for document in documents:
-            operations.append({'index': {'_index': index}})
-            operations.append(document) 
-        return self.es.bulk(operations=operations) #insere vários documentos em uma única chamada de api
     
     def find_queries(self, queries_file):
         with open(queries_file, 'r') as file:
@@ -71,7 +58,7 @@ class Search:
 
     def linear_search(self, queries, quantity):
         found_documents = {query.get('id_question'): [] for query in queries}
-
+        timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         for query in queries:
             id = query['id_question']
             question = query['question']
@@ -84,7 +71,8 @@ class Search:
                     }
                 }
             }
-            results = self.search(index="contextos", body=query_busca)
+            
+            results = calculate_action_execution_time(self.search, self.linear_search.__name__, timestamp, index="contextos", body=query_busca)
 
             found_documents[id].extend(hit['_id'] for hit in results['hits']['hits'])
 
@@ -150,6 +138,23 @@ class Search:
         plt.grid(True)
         plt.xticks(k_valores)
         plt.show()
+
+    # Deleta e cria um novo índice de nome <index>
+    def create_index(self, index):
+        self.es.indices.delete(index=index, ignore_unavailable=True) 
+        self.es.indices.create(index=index) 
+
+    # Insere um documento em um indice e retorna resposta do elastic search
+    def insert_document(self, index, body, id):
+        return self.es.index(index=index, body=body, id=id) 
+    
+    # Insere vários documentos no índice de uma vez
+    def insert_documents(self, index, documents):
+        operations = []
+        for document in documents:
+            operations.append({'index': {'_index': index, '_id': document['context_id']}})
+            operations.append(document) 
+        return self.es.bulk(operations=operations) #insere vários documentos em uma única chamada de api
 
     def search(self, index, **query_args):
         return self.es.search(index=index, **query_args)
