@@ -1,8 +1,17 @@
 .env
 __pycache__
-logs
+
+# pastas
+logs 
+results
+
+
+
+
+
+
 
 
 
 # ignore
-apagar.json
+ignorar
