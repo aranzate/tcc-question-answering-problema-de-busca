@@ -11,17 +11,30 @@ class Index:
 
     # Adiciona os documentos, um de cada vez, ao elastic_search
     def index_documents(self, file_path, array_name):
+
         with open(file_path, 'r', encoding='utf-8') as json_file:
             data = json.load(json_file)
 
         timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-        with open(f".\\logs\\{self.index_documents.__name__}_{timestamp}.txt", 'w', encoding='utf-8') as file:
-            file.write(f"Função {self.index_documents.__name__} no arquivo {file_path}\n")
-
+        actions = []
         for doc_id, body in enumerate(data[array_name], start=1):
-            # Aqui, doc_id é usado como o ID do documento. Você pode ajustar isso conforme necessário.
-            calculate_action_execution_time(self.es.insert_document, self.index_documents.__name__, timestamp, self.index, body, doc_id)
-            
+            start_time = time.time()
+            self.es.insert_document(self.index, body, doc_id)
+            end_time = time.time()
+            execution_time = end_time - start_time
+            actions.append({"id": doc_id, "time":  execution_time})
+
+        data_log = {
+            "function_name": self.index_documents.__name__,
+            "file_path": file_path,
+            "action_name": self.es.insert_document.__name__,
+            "actions": actions
+        } 
+
+        with open(f".\\logs\\{self.index_documents.__name__}_{timestamp}.json", 'w', encoding='utf-8') as json_file:
+            json.dump(data_log, json_file, indent=4)
+
+        
     # Adiciona os documentos de uma vez, ao elastic_search
     def index_documents_bulk(self, file_path, array_name):
         with open(file_path, 'r', encoding='utf-8') as json_file:

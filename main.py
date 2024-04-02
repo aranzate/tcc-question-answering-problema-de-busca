@@ -22,7 +22,8 @@ es = Search()
 index = Index(es, INDEX)
 
 es.create_index(INDEX)
-#index.index_documents(FILE_PATH, ARRAY_NAME)
+index.index_documents(FILE_PATH, ARRAY_NAME)
+'''
 index.index_documents_bulk(FILE_PATH, ARRAY_NAME)
 queries = find_queries(QUERIES_PATH)
 
@@ -48,3 +49,4 @@ with open('.\\results\\answers.json', 'r') as answers_file:
 precision_at_k(found_documents, answers, 10)
 recall_at_k(found_documents, answers, 10)
 
+'''
