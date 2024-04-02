@@ -28,3 +28,12 @@ def calculate_action_execution_time(action, func_name, timestamp, *args, **kwarg
         log_file.write(f"Ação '{action.__name__}' executada em {execution_time:.6f} segundos.\n")
 
     return result
+
+# Calcula o tempo de execução de uma ação 
+def calculate_execution_time(func, id, *args, **kwargs):
+    start_time = time.time()
+    func(*args, **kwargs)
+    end_time = time.time()
+    execution_time = end_time - start_time
+    return {"id": id, "time":  execution_time}
+

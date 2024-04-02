@@ -1,7 +1,7 @@
 import json
 from datetime import datetime
 import time
-from benchmark_recorder import calculate_action_execution_time, calculate_function_execution_time
+from benchmark_recorder import *
 
 class Index: 
     # Recebe a instancia do objeto da classe ElasticSearch e o nome do index
@@ -16,19 +16,17 @@ class Index:
             data = json.load(json_file)
 
         timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-        actions = []
+
+        actions_time = []
         for doc_id, body in enumerate(data[array_name], start=1):
-            start_time = time.time()
-            self.es.insert_document(self.index, body, doc_id)
-            end_time = time.time()
-            execution_time = end_time - start_time
-            actions.append({"id": doc_id, "time":  execution_time})
+            action_time = calculate_execution_time(self.es.insert_document, doc_id, self.index, body, doc_id)
+            actions_time.append(action_time)
 
         data_log = {
             "function_name": self.index_documents.__name__,
             "file_path": file_path,
             "action_name": self.es.insert_document.__name__,
-            "actions": actions
+            "actions_time": actions_time
         } 
 
         with open(f".\\logs\\{self.index_documents.__name__}_{timestamp}.json", 'w', encoding='utf-8') as json_file:
