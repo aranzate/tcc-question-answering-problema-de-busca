@@ -8,6 +8,7 @@ def linear_search(es, queries, quantity):
     
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     actions = []
+    
     for query in queries:
         id = query['id_question']
         question = query['question']
