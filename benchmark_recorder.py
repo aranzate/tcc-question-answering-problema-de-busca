@@ -30,10 +30,10 @@ def calculate_action_execution_time(action, func_name, timestamp, *args, **kwarg
 
     return result
 
-def write_log(function_name, file_path, action_name, actions, timestamp):
+def write_log(function_name, origin, action_name, actions, timestamp):
     data_log = {
         "function_name": function_name,
-        "file_path": file_path,
+        "origin": origin,
         "action_name": action_name,
         "actions": actions
     } 

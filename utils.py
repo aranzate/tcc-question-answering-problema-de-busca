@@ -1,12 +1,13 @@
 import json
 import json
 from datetime import datetime
-from benchmark_recorder import calculate_action_execution_time, calculate_function_execution_time
+from benchmark_recorder import *
 
 def linear_search(es, queries, quantity):
     found_documents = {query.get('id_question'): [] for query in queries}
     
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+   
     for query in queries:
         id = query['id_question']
         question = query['question']
@@ -21,10 +22,10 @@ def linear_search(es, queries, quantity):
         }
         
         results = calculate_action_execution_time(es.search, linear_search.__name__, timestamp, index="contextos", body=query_busca)
-
+        
         found_documents[id].extend(hit['_id'] for hit in results['hits']['hits'])
 
-    
+    write_log(linear_search.__name__, "contextos do elastic search", es.search.__name__, found_documents, timestamp)
     
     return found_documents
     
