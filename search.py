@@ -5,10 +5,6 @@ from elasticsearch import Elasticsearch
 from ssl import create_default_context # TODO: verificar pq disso
 from pprint import pprint
 
-from datetime import datetime
-import time
-from benchmark_recorder import calculate_action_execution_time, calculate_function_execution_time
-
 load_dotenv()
 
 '''
