@@ -1,5 +1,6 @@
 import time
 from datetime import datetime
+import json
 
 # Calcula o tempo de execução de uma função e salva em um arquivo 
 def calculate_function_execution_time(func, *args, **kwargs):
@@ -28,6 +29,17 @@ def calculate_action_execution_time(action, func_name, timestamp, *args, **kwarg
         log_file.write(f"Ação '{action.__name__}' executada em {execution_time:.6f} segundos.\n")
 
     return result
+
+def write_log(function_name, file_path, action_name, actions, timestamp):
+    data_log = {
+        "function_name": function_name,
+        "file_path": file_path,
+        "action_name": action_name,
+        "actions": actions
+    } 
+
+    with open(f".\\logs\\{function_name}_{timestamp}.json", 'w', encoding='utf-8') as json_file:
+        json.dump(data_log, json_file, indent=4)
 
 # Calcula o tempo de execução de uma ação 
 def calculate_execution_time(func, id, *args, **kwargs):

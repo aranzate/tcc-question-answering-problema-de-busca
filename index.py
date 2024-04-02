@@ -11,7 +11,6 @@ class Index:
 
     # Adiciona os documentos, um de cada vez, ao elastic_search
     def index_documents(self, file_path, array_name):
-
         with open(file_path, 'r', encoding='utf-8') as json_file:
             data = json.load(json_file)
 
@@ -22,15 +21,7 @@ class Index:
             action_time = calculate_execution_time(self.es.insert_document, doc_id, self.index, body, doc_id)
             actions_time.append(action_time)
 
-        data_log = {
-            "function_name": self.index_documents.__name__,
-            "file_path": file_path,
-            "action_name": self.es.insert_document.__name__,
-            "actions_time": actions_time
-        } 
-
-        with open(f".\\logs\\{self.index_documents.__name__}_{timestamp}.json", 'w', encoding='utf-8') as json_file:
-            json.dump(data_log, json_file, indent=4)
+        write_log(self.index_documents.__name__, file_path, self.es.insert_document.__name__, actions_time, timestamp)
 
         
     # Adiciona os documentos de uma vez, ao elastic_search
