@@ -18,7 +18,7 @@ class Index:
 
         actions_time = []
         for doc_id, body in enumerate(data[array_name], start=1):
-            action_time = calculate_execution_time(self.es.insert_document, doc_id, self.index, body, doc_id)
+            action_time, result = calculate_execution_time(self.es.insert_document, doc_id, self.index, body, doc_id)
             actions_time.append(action_time)
 
         write_log(self.index_documents.__name__, file_path, self.es.insert_document.__name__, actions_time, timestamp)

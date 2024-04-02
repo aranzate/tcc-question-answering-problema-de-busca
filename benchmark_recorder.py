@@ -44,8 +44,8 @@ def write_log(function_name, origin, action_name, actions, timestamp):
 # Calcula o tempo de execução de uma ação 
 def calculate_execution_time(func, id, *args, **kwargs):
     start_time = time.time()
-    func(*args, **kwargs)
+    result = func(*args, **kwargs)
     end_time = time.time()
     execution_time = end_time - start_time
-    return {"id": id, "time":  execution_time}
+    return {"id": id, "time":  execution_time}, result
 

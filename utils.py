@@ -7,7 +7,7 @@ def linear_search(es, queries, quantity):
     found_documents = {query.get('id_question'): [] for query in queries}
     
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-   
+    actions = []
     for query in queries:
         id = query['id_question']
         question = query['question']
@@ -21,11 +21,13 @@ def linear_search(es, queries, quantity):
             }
         }
         
-        results = calculate_action_execution_time(es.search, linear_search.__name__, timestamp, index="contextos", body=query_busca)
-        
+        action_time, results = calculate_execution_time(es.search, id, index="contextos", body=query_busca)
+        action_time["hits"] = [hit['_id'] for hit in results['hits']['hits']]
+        actions.append(action_time)
+
         found_documents[id].extend(hit['_id'] for hit in results['hits']['hits'])
 
-    write_log(linear_search.__name__, "contextos do elastic search", es.search.__name__, found_documents, timestamp)
+    write_log(linear_search.__name__, "contextos do elastic search", es.search.__name__, actions, timestamp)
     
     return found_documents
     
