@@ -28,6 +28,9 @@ class Index:
     def index_documents_bulk(self, file_path, array_name):
         with open(file_path, 'r', encoding='utf-8') as json_file:
             data = json.load(json_file)[array_name]
-            
-        calculate_function_execution_time(self.es.insert_documents, self.index, data)
+        
+        timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        action_time, result = calculate_execution_time(self.es.insert_documents, None, self.index, data)
+        actions = [action_time]
+        write_log(self.index_documents_bulk.__name__, file_path, self.es.insert_documents.__name__, actions, timestamp)
         

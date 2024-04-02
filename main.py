@@ -22,8 +22,8 @@ es = Search()
 index = Index(es, INDEX)
 
 es.create_index(INDEX)
-index.index_documents(FILE_PATH, ARRAY_NAME)
-# index.index_documents_bulk(FILE_PATH, ARRAY_NAME)
+# index.index_documents(FILE_PATH, ARRAY_NAME)
+index.index_documents_bulk(FILE_PATH, ARRAY_NAME)
 queries = find_queries(QUERIES_PATH)
 
 
