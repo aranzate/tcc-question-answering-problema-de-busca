@@ -5,3 +5,5 @@ Tutorial: [https://www.elastic.co/guide/en/elasticsearch/reference/current/docke
 Coloque as credenciais geradas pela instalação do ES no Docker, no .env
 
 ## Instale as bibliotecas presentes no requirements.txt
+
+teste
