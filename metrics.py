@@ -2,44 +2,44 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 def precision_at_k(documentos_encontrados, documentos_relevantes, k_maximo):
-        k_valores = range(1, k_maximo + 1)
-        precisao_valores = []
-        desvio_padrao_valores = []
+    k_valores = range(1, k_maximo + 1)
+    precisao_valores = []
+    desvio_padrao_valores = []
 
-        for k in k_valores:
-            precisoes = []
-            for id, relevant_docs in documentos_relevantes.items():
-                documentos_encontrados_query = documentos_encontrados.get(id, [])
-                k_documentos_encontrados = documentos_encontrados_query[:k]
-                k_relevantes = [doc for doc in k_documentos_encontrados if doc in relevant_docs]
-                precisao = len(k_relevantes) / k if k != 0 else 0
-                precisoes.append(precisao)
+    plt.figure(figsize=(20, 10))
+    plt.subplots_adjust(wspace=0.7)
+    for k in k_valores:
+        precisoes = []
+        for id, relevant_docs in documentos_relevantes.items():
+            documentos_encontrados_query = documentos_encontrados.get(id, [])
+            k_documentos_encontrados = documentos_encontrados_query[:k]
+            k_relevantes = [doc for doc in k_documentos_encontrados if doc in relevant_docs]
+            precisao = len(k_relevantes) / k if k != 0 else 0
+            precisoes.append(precisao)
 
-            media_aritmetica_k = np.mean(precisoes)
-            desvio_padrao_k = np.std(precisoes)
-            
-            precisao_valores.append(media_aritmetica_k)
-            desvio_padrao_valores.append(desvio_padrao_k)
+        desvio_padrao_k = np.std(precisoes)
+        desvio_padrao_valores.append(desvio_padrao_k)
 
-        # Plot do gráfico
-        plt.figure(figsize=(10, 6))
-        
-        plt.subplot(1, 2, 1)
-        plt.errorbar(k_valores, precisao_valores, yerr=desvio_padrao_valores, fmt='o-', ecolor='r', capsize=5)
-        plt.xlabel('k')
-        plt.ylabel('Precision@k (Média)')
-        plt.title('Precision@k Gráfico')
-        plt.grid(True)
-        plt.xticks(k_valores)
-        
-        plt.subplot(1, 2, 2)
+        plt.subplot(1, len(k_valores), k)
         plt.boxplot(desvio_padrao_valores)
-        plt.xlabel('Desvio Padrão do Precision@k')
-        plt.title('Boxplot do Desvio Padrão do Precision@k')
-        plt.grid(True)
+        print(desvio_padrao_valores)
         
-        plt.tight_layout()
-        plt.show()
+        plt.title(f'k={k}')
+        plt.grid(True)
+
+        media_aritmetica_k = np.mean(precisoes)
+        precisao_valores.append(media_aritmetica_k)
+
+    # Plot do gráfico final
+    plt.figure(figsize=(10, 6))
+    plt.errorbar(k_valores, precisao_valores, yerr=desvio_padrao_valores, fmt='o-', ecolor='r', capsize=5)
+    plt.xlabel('k')
+    plt.ylabel('Precision@k (Média)')
+    plt.title('Precision@k Gráfico')
+    plt.grid(True)
+    plt.xticks(k_valores)
+    plt.tight_layout()
+    plt.show()
         
 
 

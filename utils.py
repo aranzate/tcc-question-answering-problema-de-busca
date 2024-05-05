@@ -31,6 +31,47 @@ def linear_search(es, queries, quantity):
     write_log(linear_search.__name__, "contextos do elastic search", es.search.__name__, actions, timestamp)
     
     return found_documents
+
+def parallel_search(es, queries, quantity):
+    found_documents = {query.get('id_question'): [] for query in queries}
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    actions = []
+
+    msearch_body = []
+    ids = []
+
+    for query in queries:
+        id = query['id_question']
+        question = query['question']
+
+        query_busca = {
+            "size": quantity,
+            "query": {
+                "match": {
+                    "context": question  # Busca apenas no contexto específico
+                }
+            }
+        }
+
+        msearch_body.append({"index": "contextos"})
+        msearch_body.append(query_busca)
+        ids.append(id)
+
+    start_time = time.time()
+    results = es.msearch(index="contextos", body=msearch_body)
+    end_time = time.time()
+    execution_times = msearch_execution_time(results, ids)
+
+    for action_time, result in zip(execution_times, results['responses']):
+        id = action_time["id"]
+        action_time["hits"] = [hit['_id'] for hit in result['hits']['hits']]
+        actions.append(action_time)
+        found_documents[id].extend(hit['_id'] for hit in result['hits']['hits'])
+
+    write_log(parallel_search.__name__, "contextos do elastic search", "msearch", actions, timestamp)
+    end_time = time.time()
+    print(end_time - start_time)
+    return found_documents
     
 # retorna o json de queries 
 def find_queries(queries_file):

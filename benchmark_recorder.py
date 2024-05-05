@@ -22,3 +22,8 @@ def calculate_execution_time(func, id, *args, **kwargs):
     execution_time = end_time - start_time
     return {"id": id, "time":  execution_time}, result
 
+def msearch_execution_time(results, ids):
+    execution_times = []
+    for id, result in zip(ids, results['responses']):
+        execution_times.append({"id": id, "time": result.get('took', 0) / 1000})  # Convertendo de ms para segundos
+    return execution_times

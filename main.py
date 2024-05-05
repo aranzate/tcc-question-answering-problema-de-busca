@@ -10,6 +10,7 @@ urllib3.disable_warnings()
 
 # Inicializa variáveis globais
 INDEX = "contextos"
+SHARDS = 2
 FILE_PATH = ".\\squad-v1.1-pt-master\\contexts.json"
 QUERIES_PATH = ".\\squad-v1.1-pt-master\\questions.json"
 ARRAY_NAME = 'contexts'
@@ -21,11 +22,11 @@ RESULT_FOUND_PATH = ".\\results\\found.json"
 es = Search()
 
 # Cria o objeto da classe de indexação
-index = Index(es, INDEX)
+# index = Index(es, INDEX)
 
-es.create_index(INDEX)
-# index.index_documents(FILE_PATH, ARRAY_NAME)
-index.index_documents_bulk(FILE_PATH, ARRAY_NAME)
+# es.create_index(INDEX, SHARDS)
+# # index.index_documents(FILE_PATH, ARRAY_NAME)
+# index.index_documents_bulk(FILE_PATH, ARRAY_NAME)
 queries = find_queries(QUERIES_PATH)
 
 
@@ -36,7 +37,8 @@ with open(output_answers_path, 'w') as json_file:
     json.dump(answers, json_file, indent=4)
 
 # Escreva os documentos encontrados no JSON
-found_documents = linear_search(es, queries, SEARCHED_DOCUMENTS_QUANTITY)
+#found_documents = linear_search(es, queries, SEARCHED_DOCUMENTS_QUANTITY)
+found_documents = parallel_search(es, queries, SEARCHED_DOCUMENTS_QUANTITY)
 output_file_path = RESULT_FOUND_PATH
 with open(output_file_path, 'w') as json_file:
      json.dump(found_documents, json_file, indent=4)
