@@ -41,7 +41,8 @@ class Search:
                                            #'number_of_replicas': 0
                                        }
                                    }
-                               }) 
+                               })
+        
 
     # Insere um documento em um indice e retorna resposta do elastic search
     def insert_document(self, index, body, id):
@@ -59,7 +60,7 @@ class Search:
         return self.es.search(index=index, **query_args)
     
     def msearch(self, index, **query_args):
-        return self.es.msearch(index=index, max_concurrent_shard_requests= query_args)
+        return self.es.msearch(index=index, max_concurrent_shard_requests=5, max_concurrent_searches=5, **query_args)
 
     def retrieve_document(self, index, id):
         return self.es.get(index=index, id=id)
