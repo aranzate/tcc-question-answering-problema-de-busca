@@ -32,9 +32,17 @@ class Search:
         # pprint(client_info.body)
 
     # Deleta e cria um novo índice de nome <index>
-    def create_index(self, index):
+    def create_index(self, index, shards):
         self.es.indices.delete(index=index, ignore_unavailable=True) 
-        self.es.indices.create(index=index) 
+        self.es.indices.create(index=index, body={
+                                   'settings': {
+                                       'index': {
+                                           'number_of_shards': shards,
+                                           #'number_of_replicas': 0
+                                       }
+                                   }
+                               })
+        
 
     # Insere um documento em um indice e retorna resposta do elastic search
     def insert_document(self, index, body, id):
@@ -52,7 +60,7 @@ class Search:
         return self.es.search(index=index, **query_args)
     
     def msearch(self, index, **query_args):
-        return self.es.msearch(index=index, **query_args)
+        return self.es.msearch(index=index, max_concurrent_shard_requests=5, max_concurrent_searches=5, **query_args)
 
     def retrieve_document(self, index, id):
         return self.es.get(index=index, id=id)
