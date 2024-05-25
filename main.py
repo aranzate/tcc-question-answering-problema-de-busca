@@ -4,54 +4,43 @@ from utils import *
 from metrics import *
 import urllib3
 import json
+import consts
 
 # desabilita avisos
 urllib3.disable_warnings() 
 
-# Inicializa variáveis globais
-INDEX = "contextos"
-SHARDS = 1
-NODES = 1
-FILE_PATH = ".\\squad-v1.1-pt-master\\contexts.json"
-QUERIES_PATH = ".\\squad-v1.1-pt-master\\questions.json"
-ARRAY_NAME = 'contexts'
-SEARCHED_DOCUMENTS_QUANTITY = 10
-RESULT_ANSWERS_PATH = ".\\results\\answers.json"
-RESULT_FOUND_PATH = ".\\results\\found.json"
 # Cria objeto de busca no elastic search
 es = Search()
 
 def indexing(shards, nodes):
     # Cria o objeto da classe de indexação
-    index = Index(es, INDEX)
+    index = Index(es, consts.INDEX)
 
-    es.create_index(INDEX, SHARDS)
-    # index.index_documents(FILE_PATH, ARRAY_NAME, shards, nodes)
-    index.index_documents_bulk(FILE_PATH, ARRAY_NAME, shards, nodes)
+    es.create_index(consts.INDEX, consts.SHARDS)
+    # index.index_documents(consts.FILE_PATH, consts.ARRAY_NAME, shards, nodes)
+    index.index_documents_bulk(consts.FILE_PATH, consts.ARRAY_NAME, shards, nodes)
 
-#indexing(shards=SHARDS, nodes=NODES)
-queries = find_queries(QUERIES_PATH)
+# indexing(shards=consts.SHARDS, nodes=consts.NODES)
+queries = find_queries(consts.QUERIES_PATH)
 #Escreva as respostas encontrados no JSON
-answers = find_answers(QUERIES_PATH)
-output_answers_path = RESULT_ANSWERS_PATH
+answers = find_answers(consts.QUERIES_PATH)
+output_answers_path = consts.RESULT_ANSWERS_PATH
 with open(output_answers_path, 'w') as json_file:
     json.dump(answers, json_file, indent=4)
 
 # Escreva os documentos encontrados no JSON
-#found_documents = linear_search(es, queries, SEARCHED_DOCUMENTS_QUANTITY, SHARDS, NODES)
-#found_documents = linear_msearch(es, queries, SEARCHED_DOCUMENTS_QUANTITY, SHARDS, NODES)
-found_documents = parallel_search(es, queries, SEARCHED_DOCUMENTS_QUANTITY, SHARDS, NODES)
-output_file_path = RESULT_FOUND_PATH
+#found_documents = linear_search(es, queries, consts.SEARCHED_DOCUMENTS_QUANTITY, consts.SHARDS, consts.NODES)
+#found_documents = linear_msearch(es, queries, consts.SEARCHED_DOCUMENTS_QUANTITY, consts.SHARDS, consts.NODES)
+found_documents = parallel_search(es, queries, consts.SEARCHED_DOCUMENTS_QUANTITY, consts.SHARDS, consts.NODES)
+output_file_path = consts.RESULT_FOUND_PATH
 with open(output_file_path, 'w') as json_file:
     json.dump(found_documents, json_file, indent=4)
 
 # Carrega dados obtidos dos JSON para calcular precision@k e recall@k
-with open(RESULT_FOUND_PATH, 'r') as found_file:
+with open(consts.RESULT_FOUND_PATH, 'r') as found_file:
     found_documents = json.load(found_file)
-with open(RESULT_ANSWERS_PATH, 'r') as answers_file:
+with open(consts.RESULT_ANSWERS_PATH, 'r') as answers_file:
     answers = json.load(answers_file)
-
-
 
 precision_at_k(found_documents, answers, 10)
 recall_at_k(found_documents, answers, 10)

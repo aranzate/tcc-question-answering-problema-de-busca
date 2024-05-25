@@ -7,6 +7,7 @@ import urllib3
 import json
 import os
 from dotenv import load_dotenv
+import consts
 
 urllib3.disable_warnings()
 
@@ -23,8 +24,6 @@ client = Elasticsearch(
     basic_auth=(ELASTICSEARCH_USERNAME, ELASTICSEARCH_PASSWORD),
     verify_certs=False
 )
-caminho_documentos = ".\\squad-v1.1-pt-master\\contexts.json"
-caminho_queries = ".\\squad-v1.1-pt-master\\questions.json"
 
 
 def indexar_documentos(caminho_arquivo):
@@ -201,9 +200,9 @@ def recall_at_k(documentos_encontrados, documentos_relevantes, k_maximo):
     plt.xticks(k_valores)
     plt.show()
 
-indexar_documentos(caminho_documentos)
-queries = encontrar_queries(caminho_queries)
-gabarito = documentos_relevantes(caminho_queries)
+indexar_documentos(consts.FILE_PATH)
+queries = encontrar_queries(consts.QUERIES_PATH)
+gabarito = documentos_relevantes(consts.QUERIES_PATH)
 documentos_encontrados = buscar(queries, 5)
 precision_at_k(documentos_encontrados, gabarito, 5)
 recall_at_k(documentos_encontrados, gabarito, 5)
