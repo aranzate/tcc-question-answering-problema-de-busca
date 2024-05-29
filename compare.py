@@ -2,6 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import json
 import os
+import consts
 
 # Função para ler JSON e extrair tempos de consulta
 def read_json_to_df(filepath, tempo_col_name, time_key):
@@ -20,9 +21,9 @@ def read_json_to_df(filepath, tempo_col_name, time_key):
     return df, nodes, shards, time_python_function
 
 # Ler os arquivos JSON
-linear_search, nodes, shards, time_linear = read_json_to_df('./logs/linear_search_2024-05-08_13-29-38.json', 'tempo_linear_search', 'time_python')
-linear_msearch, _, _, time_msearch = read_json_to_df('./logs/linear_msearch_2024-05-08_13-41-20.json', 'tempo_linear_msearch', 'time')
-parallel_search, _, _, time_parallel = read_json_to_df('./logs/parallel_search_2024-05-08_22-29-28.json', 'tempo_parallel_search', 'time')
+linear_search, nodes, shards, time_linear = read_json_to_df(f"./logs/{consts.LINEAR_SEARCH_PATH}.json", 'tempo_linear_search', 'time_python')
+linear_msearch, _, _, time_msearch = read_json_to_df(f"./logs/{consts.LINEAR_MSEARCH_PATH}.json", 'tempo_linear_msearch', 'time')
+parallel_search, _, _, time_parallel = read_json_to_df(f"./logs/{consts.PARALLEL_SEARCH}.json", 'tempo_parallel_search', 'time')
 
 # Mesclar os DataFrames com base na coluna 'id'
 df = linear_search.merge(linear_msearch, on='id').merge(parallel_search, on='id')
@@ -68,7 +69,7 @@ axs[3].grid(True)
 axs[3].legend(loc='upper center', bbox_to_anchor=(0.5, -0.15), ncol=3)
 
 # Ajustar layout
-plt.tight_layout()
+#plt.tight_layout()
 
 nome_arquivo = f'grafico_shards_{shards}_nodes_{nodes}.png'
 # Caminho completo do arquivo

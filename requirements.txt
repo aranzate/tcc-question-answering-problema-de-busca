@@ -2,3 +2,4 @@ pip install python-dotenv
 pip install elasticsearch
 pip install -U matplotlib
 pip install pandas
+pip install PyQt5
