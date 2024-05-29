@@ -1,7 +1,7 @@
 system = "linux" # windows
 
 INDEX = "contextos"
-SHARDS = 1
+SHARDS = 7
 NODES = 1
 ARRAY_NAME = 'contexts'
 SEARCHED_DOCUMENTS_QUANTITY = 10
