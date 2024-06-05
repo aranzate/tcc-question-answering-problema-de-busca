@@ -1,4 +1,4 @@
-system = "linux" # windows
+system = "windows" # linux
 
 INDEX = "contextos"
 SHARDS = 7
@@ -6,9 +6,9 @@ NODES = 1
 ARRAY_NAME = 'contexts'
 SEARCHED_DOCUMENTS_QUANTITY = 10
 
-LINEAR_SEARCH_PATH='linear_search_2024-05-28_22-50-44'
-LINEAR_MSEARCH_PATH='linear_msearch_2024-05-28_22-21-53'
-PARALLEL_SEARCH='parallel_search_2024-05-08_22-29-28'
+LINEAR_SEARCH_PATH='linear_search_2024-06-04_20-03-54'
+LINEAR_MSEARCH_PATH='linear_msearch_2024-06-04_19-39-44'
+PARALLEL_SEARCH='parallel_search_2024-06-04_19-32-27'
 
 if(system == "linux"):
     # FILE_PATH = "./ignorar/contexts.json"

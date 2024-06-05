@@ -37,37 +37,28 @@ fig.text(0.05, 0.95, f'Nodes: {nodes}, Shards: {shards}\n')
 
 # Definir os limites dos eixos x e y
 x_limits = (df['id'].min(), df['id'].max())
-y_limits = (0,.05) # (min(df['tempo_linear_search'].min(), df['tempo_linear_msearch'].min()), max(df['tempo_linear_search'].max(), df['tempo_linear_msearch'].max()))
+y_limits = (0,.05) #(min(df['tempo_linear_search'].min(), df['tempo_linear_msearch'].min()), max(df['tempo_linear_search'].max(), df['tempo_linear_msearch'].max()))
+
+# Função para criar e salvar cada subplot
+def create_subplot(ax, data, label, color, title, time):
+    ax.plot(df['id'], data, label=label, color=color)
+    ax.set_xlabel('ID', labelpad=-9)
+    ax.set_ylabel('Tempo (s)')
+    ax.set_title(title)
+    ax.grid(True)
+    if time is not None:
+        ax.text(0.88, 0.95, f'Tempo: {time:.2f} s', transform=ax.transAxes, fontsize=10, verticalalignment='top', bbox=dict(facecolor='white', alpha=0.5))
+    ax.set_xlim(x_limits)
+    ax.set_ylim(y_limits)
 
 # Subplot 1: Linear Search
-axs[0].plot(df['id'], df['tempo_linear_search'], label='Linear Search', color='blue')
-axs[0].set_xlabel('ID', labelpad=-9)
-axs[0].set_ylabel('Tempo (s)')
-axs[0].set_title('Linear Search')
-axs[0].grid(True)
-axs[0].text(0.88, 0.95, f'Tempo: {time_linear:.2f} s', transform=axs[0].transAxes, fontsize=10, verticalalignment='top', bbox=dict(facecolor='white', alpha=0.5))
-axs[0].set_xlim(x_limits)
-axs[0].set_ylim(y_limits)
+create_subplot(axs[0], df['tempo_linear_search'], 'Linear Search', 'blue', 'Linear Search', time_linear)
 
 # Subplot 2: Linear MSearch
-axs[1].plot(df['id'], df['tempo_linear_msearch'], label='Linear MSearch', color='red')
-axs[1].set_xlabel('ID', labelpad=-9)
-axs[1].set_ylabel('Tempo (s)')
-axs[1].set_title('Linear MSearch')
-axs[1].grid(True)
-axs[1].text(0.88, 0.95, f'Tempo: {time_msearch:.2f} s', transform=axs[1].transAxes, fontsize=10, verticalalignment='top', bbox=dict(facecolor='white', alpha=0.5))
-axs[1].set_xlim(x_limits)
-axs[1].set_ylim(y_limits)
+create_subplot(axs[1], df['tempo_linear_msearch'], 'Linear MSearch', 'red', 'Linear MSearch', time_msearch)
 
 # Subplot 3: Parallel Search
-axs[2].plot(df['id'], df['tempo_parallel_search'], label='Parallel Search', color='green')
-axs[2].set_xlabel('ID', labelpad=-9)
-axs[2].set_ylabel('Tempo (s)')
-axs[2].set_title('Parallel Search')
-axs[2].grid(True)
-axs[2].text(0.88, 0.95, f'Tempo: {time_parallel:.2f} s', transform=axs[2].transAxes, fontsize=10, verticalalignment='top', bbox=dict(facecolor='white', alpha=0.5))
-axs[2].set_xlim(x_limits)
-axs[2].set_ylim(y_limits)
+create_subplot(axs[2], df['tempo_parallel_search'], 'Parallel Search', 'green', 'Parallel Search', time_parallel)
 
 # Subplot 4: Combined
 axs[3].plot(df['id'], df['tempo_linear_search'], label='Linear Search', color='blue')
@@ -80,40 +71,43 @@ axs[3].grid(True)
 axs[3].set_xlim(x_limits)
 axs[3].set_ylim(y_limits)
 
-# Ajustar a legenda para fora do gráfico
-# axs[3].legend(loc='upper center', bbox_to_anchor=(0.5, -0.15), ncol=3)
+# Subplot 5: Combinação linear_search x linear_msearch
+create_subplot(axs[4], df['linear_minus_msearch'], 'Linear Search - Linear Msearch', 'purple', 'Linear Search - Linear Msearch', None)
 
-# Subplot 5: Combinação linear_search x linear_msearch 
-# axs[4].plot(df['id'], df['tempo_linear_search'], label='Linear Search', color='blue')
-# axs[4].plot(df['id'], df['tempo_linear_msearch'], label='Linear MSearch', color='red')
-axs[4].plot(df['id'], df['linear_minus_msearch'], label='Linear Search - Linear Msearch', color='purple')
-axs[4].set_xlabel('ID', labelpad=-9)
-axs[4].set_ylabel('Tempo (s)')
-axs[4].set_title('Linear Search - Linear Msearch')
-axs[4].grid(True)
-axs[4].text(0.88, 0.95, f'', transform=axs[4].transAxes, fontsize=10, verticalalignment='top', bbox=dict(facecolor='white', alpha=0.5))
-axs[4].set_xlim(x_limits)
-axs[4].set_ylim(y_limits)
+# Subplot 6: Combinação linear_search x parallel_search
+create_subplot(axs[5], df['linear_minus_parallel'], 'Linear Search - Parallel Search', 'teal', 'Linear Search - Parallel Search', None)
 
-# Subplot 6: Combinação linear_search x parallel_search 
-# axs[5].plot(df['id'], df['tempo_linear_search'], label='Linear Search', color='blue')
-# axs[5].plot(df['id'], df['tempo_parallel_search'], label='Parallel Search', color='green')
-axs[5].plot(df['id'], df['linear_minus_parallel'], label='Linear Search - Parallel Search', color='teal')
-axs[5].set_xlabel('ID', labelpad=-9)
-axs[5].set_ylabel('Tempo (s)')
-axs[5].set_title('Linear Search - Parallel Search')
-axs[5].grid(True)
-axs[5].text(0.88, 0.95, f'', transform=axs[5].transAxes, fontsize=10, verticalalignment='top', bbox=dict(facecolor='white', alpha=0.5))
-axs[5].set_xlim(x_limits)
-axs[5].set_ylim(y_limits)
-
-# Ajustar layout
-#plt.tight_layout()
-
-# Caminho completo do arquivo
-nome_arquivo = f'grafico_shards_{shards}_nodes_{nodes}.png'
-caminho_arquivo = os.path.join('./graficos', nome_arquivo)
-
-# Salvar o gráfico em um arquivo com o caminho especificado
-plt.savefig(caminho_arquivo)
+# Salvar a figura com todos os subplots
+fig_all_path = f'./graficos/grafico_shards_{shards}_nodes_{nodes}.png'
+plt.savefig(fig_all_path)
 plt.show()
+
+# Salvar cada subplot individualmente
+subplot_titles = [
+    ('Linear Search', 'tempo_linear_search', 'blue', time_linear),
+    ('Linear MSearch', 'tempo_linear_msearch', 'red', time_msearch),
+    ('Parallel Search', 'tempo_parallel_search', 'green', time_parallel),
+    ('Comparação dos Tempos de Resposta das Consultas', None, None, None),
+    ('Linear Search - Linear Msearch', 'linear_minus_msearch', 'purple', None),
+    ('Linear Search - Parallel Search', 'linear_minus_parallel', 'teal', None)
+]
+
+for i, (title, column, color, time) in enumerate(subplot_titles):
+    fig, ax = plt.subplots(figsize=(10, 4))
+    if column:
+        create_subplot(ax, df[column], title, color, title, time)
+    else:
+        ax.plot(df['id'], df['tempo_linear_search'], label='Linear Search', color='blue')
+        ax.plot(df['id'], df['tempo_linear_msearch'], label='Linear MSearch', color='red')
+        ax.plot(df['id'], df['tempo_parallel_search'], label='Parallel Search', color='green')
+        ax.set_xlabel('ID', labelpad=-9)
+        ax.set_ylabel('Tempo (s)')
+        ax.set_title(title)
+        ax.grid(True)
+        ax.set_xlim(x_limits)
+        ax.set_ylim(y_limits)
+    
+    # Caminho completo do arquivo
+    fig_path = f'./graficos/grafico_{title.replace(" ", "_").lower()}_shards_{shards}_nodes_{nodes}.png'
+    plt.savefig(fig_path)
+    plt.close(fig)

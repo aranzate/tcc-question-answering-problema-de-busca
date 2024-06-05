@@ -46,5 +46,5 @@ def searching():
     recall_at_k(found_documents, answers, 10)
 
 
-# indexing(shards=consts.SHARDS, nodes=consts.NODES)
+#indexing(shards=consts.SHARDS, nodes=consts.NODES)
 searching()
