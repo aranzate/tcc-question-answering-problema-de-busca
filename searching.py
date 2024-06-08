@@ -5,6 +5,7 @@ import urllib3
 import json
 import consts
 import argparse
+import sys
 urllib3.disable_warnings() 
 
 def main():
@@ -25,15 +26,18 @@ def main():
     with open(output_answers_path, 'w') as json_file:
         json.dump(answers, json_file, indent=4)
 
-    # Realiza a busca de acordo com os parâmetros passados
+    # Escolhe a função de busca de acordo com os parâmetros passados
     if args.func == 'ls':
-        found_documents = linear_search(es, queries, consts.SEARCHED_DOCUMENTS_QUANTITY, shards, nodes)
+        search_function = linear_search
     elif args.func == 'lm':
-        found_documents = linear_msearch(es, queries, consts.SEARCHED_DOCUMENTS_QUANTITY, shards, nodes)
+        search_function = linear_msearch
     elif args.func == 'ps':
-        found_documents = parallel_search(es, queries, consts.SEARCHED_DOCUMENTS_QUANTITY, shards, nodes)
+        search_function = parallel_search
     else:
         print("Função não reconhecida. As opções são: " + options)
+        sys.exit(1)
+    print("Executa " + search_function.__name__ + " com " + str(nodes) + " node(s) e " + str(shards) + " shard(s).")
+    found_documents = search_function(es, queries, consts.SEARCHED_DOCUMENTS_QUANTITY, shards, nodes)
 
     # Escreva os documentos encontrados no JSON
     output_file_path = consts.RESULT_FOUND_PATH
