@@ -1,6 +1,6 @@
 import os
-
-system = os.getenv("SYSTEM")
+from dotenv import load_dotenv
+load_dotenv('.env.local')
 
 INDEX = "contextos"
 SHARDS = 7
@@ -11,17 +11,8 @@ LINEAR_SEARCH_PATH = os.getenv("LINEAR_SEARCH_PATH")
 LINEAR_MSEARCH_PATH = os.getenv("LINEAR_MSEARCH_PATH")
 PARALLEL_SEARCH = os.getenv("PARALLEL_SEARCH")
 
-if(system == "linux"):
-    # FILE_PATH = "./ignorar/contexts.json"
-    # QUERIES_PATH = "./ignorar/questions.json" 
-    FILE_PATH = "./squad-v1.1-pt-master/contexts.json"
-    QUERIES_PATH = "./squad-v1.1-pt-master/questions.json"
-    RESULT_ANSWERS_PATH = "./results/answers.json"
-    RESULT_FOUND_PATH = "./results/found.json"
-    LOGS_PATH = "./logs/"
-else:
-    FILE_PATH = ".\\squad-v1.1-pt-master\\contexts.json"
-    QUERIES_PATH = ".\\squad-v1.1-pt-master\\questions.json"
-    RESULT_ANSWERS_PATH = ".\\results\\answers.json"
-    RESULT_FOUND_PATH = ".\\results\\found.json"
-    LOGS_PATH = ".\\logs\\"
+FILE_PATH = os.getenv("FILE_PATH")
+QUERIES_PATH = os.getenv("QUERIES_PATH")
+RESULT_ANSWERS_PATH = os.getenv("RESULT_ANSWERS_PATH")
+RESULT_FOUND_PATH = os.getenv("RESULT_FOUND_PATH")
+LOGS_PATH = os.getenv("LOGS_PATH")
