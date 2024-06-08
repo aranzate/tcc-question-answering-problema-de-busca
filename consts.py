@@ -1,4 +1,6 @@
-system = "windows" # linux
+import os
+
+system = os.getenv("SYSTEM")
 
 INDEX = "contextos"
 SHARDS = 7
@@ -6,9 +8,9 @@ NODES = 1
 ARRAY_NAME = 'contexts'
 SEARCHED_DOCUMENTS_QUANTITY = 10
 
-LINEAR_SEARCH_PATH='linear_search_2024-06-04_20-03-54'
-LINEAR_MSEARCH_PATH='linear_msearch_2024-06-04_19-39-44'
-PARALLEL_SEARCH='parallel_search_2024-06-04_19-32-27'
+LINEAR_SEARCH_PATH = os.getenv("LINEAR_SEARCH_PATH")
+LINEAR_MSEARCH_PATH = os.getenv("LINEAR_MSEARCH_PATH")
+PARALLEL_SEARCH = os.getenv("PARALLEL_SEARCH")
 
 if(system == "linux"):
     # FILE_PATH = "./ignorar/contexts.json"
