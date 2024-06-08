@@ -36,7 +36,7 @@ def main():
     else:
         print("Função não reconhecida. As opções são: " + options)
         sys.exit(1)
-    print("Executa " + search_function.__name__ + " com " + str(nodes) + " node(s) e " + str(shards) + " shard(s).")
+    print("BUSCA: Executa " + search_function.__name__ + " com " + str(nodes) + " node(s) e " + str(shards) + " shard(s).")
     found_documents = search_function(es, queries, consts.SEARCHED_DOCUMENTS_QUANTITY, shards, nodes)
 
     # Escreva os documentos encontrados no JSON

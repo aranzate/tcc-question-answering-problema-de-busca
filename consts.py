@@ -3,9 +3,10 @@ from dotenv import load_dotenv
 load_dotenv('.env.local')
 
 INDEX = "contextos"
-SHARDS = 7
 ARRAY_NAME = 'contexts'
 SEARCHED_DOCUMENTS_QUANTITY = 10
+
+SHARDS = os.getenv("SHARDS")
 
 LINEAR_SEARCH_PATH = os.getenv("LINEAR_SEARCH_PATH")
 LINEAR_MSEARCH_PATH = os.getenv("LINEAR_MSEARCH_PATH")
