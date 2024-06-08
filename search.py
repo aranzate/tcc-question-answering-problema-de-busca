@@ -64,4 +64,7 @@ class Search:
 
     def retrieve_document(self, index, id):
         return self.es.get(index=index, id=id)
+    
+    def nodes_quantity(self):
+        return self.es.nodes.stats()
 
