@@ -19,9 +19,10 @@ with open(output_answers_path, 'w') as json_file:
     json.dump(answers, json_file, indent=4)
 
 # Escreva os documentos encontrados no JSON
-found_documents = linear_search(es, queries, consts.SEARCHED_DOCUMENTS_QUANTITY, consts.SHARDS, consts.NODES)
-# found_documents = linear_msearch(es, queries, consts.SEARCHED_DOCUMENTS_QUANTITY, consts.SHARDS, consts.NODES)
-# found_documents = parallel_search(es, queries, consts.SEARCHED_DOCUMENTS_QUANTITY, consts.SHARDS, consts.NODES)
+nodes = es.nodes_quantity()
+found_documents = linear_search(es, queries, consts.SEARCHED_DOCUMENTS_QUANTITY, consts.SHARDS, nodes)
+# found_documents = linear_msearch(es, queries, consts.SEARCHED_DOCUMENTS_QUANTITY, consts.SHARDS, nodes)
+# found_documents = parallel_search(es, queries, consts.SEARCHED_DOCUMENTS_QUANTITY, consts.SHARDS, nodes)
 output_file_path = consts.RESULT_FOUND_PATH
 with open(output_file_path, 'w') as json_file:
     json.dump(found_documents, json_file, indent=4)

@@ -4,7 +4,6 @@ system = os.getenv("SYSTEM")
 
 INDEX = "contextos"
 SHARDS = 7
-NODES = 1
 ARRAY_NAME = 'contexts'
 SEARCHED_DOCUMENTS_QUANTITY = 10
 
