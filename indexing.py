@@ -13,13 +13,14 @@ def main():
     parser.add_argument('func', type=str, help='Alias da função a ser executada: ' + options)
     args = parser.parse_args()
 
+    # cria index
     es = Search()
     index = Index(es, consts.INDEX)
     nodes = es.nodes_quantity()
     shards = es.shards_quantity(consts.INDEX)
-
     es.create_index(consts.INDEX, shards)
 
+    # executa indexação de acordo com parâmetros
     if args.func == 'id':
         index.index_documents(consts.FILE_PATH, consts.ARRAY_NAME, shards, nodes)
     elif args.func == 'ib':
