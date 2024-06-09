@@ -20,11 +20,11 @@ if __name__ == "__main__":
     folder_name += consts.SEPARATOR_PATH
 
     call("indexing.py", "ib", folder_name)
-    # time.sleep(10)
-    # call("searching.py", "ls", folder_name)
-    # time.sleep(5)
-    # call("searching.py", "lm", folder_name)
-    # time.sleep(5)
-    # call("searching.py", "ps", folder_name)
-    # time.sleep(5)
+    time.sleep(10)
+    call("searching.py", "ls", folder_name)
+    time.sleep(5)
+    call("searching.py", "lm", folder_name)
+    time.sleep(5)
+    call("searching.py", "ps", folder_name)
+    time.sleep(5)
     # call("compare.py", "", folder_name)

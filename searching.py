@@ -34,13 +34,8 @@ def main():
         print("Função não reconhecida. As opções são: " + options)
         sys.exit(1)
     
-    if args.folder_name is not None:
-        folder_name = args.folder_name
-    else:
-        folder_name = ""
-
     print("BUSCA: Executa " + search_function.__name__ + " com " + str(nodes) + " node(s) e " + str(shards) + " shard(s).")
-    search_function(es, queries, consts.SEARCHED_DOCUMENTS_QUANTITY, shards, nodes, folder_name)
+    search_function(es, queries, consts.SEARCHED_DOCUMENTS_QUANTITY, shards, nodes, args.folder_name)
 
 if __name__ == '__main__':
     main()
