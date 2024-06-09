@@ -4,6 +4,7 @@ import json
 import os
 import consts
 from datetime import datetime
+import metrics
 
 # Função para ler JSON e extrair tempos de consulta
 def read_json_to_df(filepath, tempo_col_name, time_key):
@@ -117,3 +118,17 @@ for i, (title, column, color, time) in enumerate(subplot_titles):
     fig_path = f'{folder_name}/grafico_{title.replace(" ", "_").lower()}_nodes_{nodes}_shards_{shards}.png'
     plt.savefig(fig_path)
     plt.close(fig)
+
+
+
+# Precision e recall
+paths = [consts.LINEAR_SEARCH_PATH] # fazer só com 1, pq os resultados são iguais
+
+with open(consts.RESULT_ANSWERS_PATH, 'r') as answers_file:
+    answers = json.load(answers_file)
+
+for path in paths:
+    with open(f"{consts.LOGS_PATH}{path}.json", 'r') as found_file:
+        log = json.load(found_file)
+    metrics.precision_at_k(log, answers, 10, folder_name, path)
+    metrics.recall_at_k(log, answers, 10, folder_name, path)

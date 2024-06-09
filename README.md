@@ -4,6 +4,7 @@
 1. Instale o docker-compose
 2. Instale as bibliotecas presentes no requirements.txt
 3. Crie um arquivo chamado ```.env.local``` com as informações necessárias, seguindo o exemplo de ```.env.local.example```.
+4. Crie as pastas que estão no .gitignore
 
 ### Inicialize o docker
 
@@ -17,7 +18,9 @@ sudo docker-compose up -d # inicializa os nós e o kibana
 
 Obs.: para mais informações leia [README-DOCKER](./README-DOCKER.md)
 
-### Execute o arquivo de indexação
+### Execute a indexação
+
+O arquivo ```indexing.py``` executará a indexação e salvará o resultado na pasta ```logs```.
 
 1. Execute o arquivo indexing.py no terminal, seguindo um destes exemplos:
 ```bash
@@ -27,6 +30,8 @@ python3 indexing.py ib   # index_documents_bulk
 
 ### Execute a busca
 
+O arquivo ```searching.py``` executará a busca de acordo com os parâmetros e salvará o resultado na pasta ```logs```.
+
 1. Execute o arquivo searching.py no terminal, seguindo um destes exemplos:
 ```bash
 python3 searching.py ls   # linear_search
@@ -35,6 +40,8 @@ python3 searching.py ps   # parallel_search
 ```
 
 ### Execute a comparação
+
+O arquivo ```compare.py``` gerará os gráficos com resultados na pasta ```graficos```.
 
 1. Execute o arquivo compare.py no terminal, seguindo um destes exemplos:
 ```bash
