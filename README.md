@@ -1,12 +1,12 @@
 # tcc-question-answering-problema-de-busca
 
-## Passos iniciais:
+# Passos iniciais:
 1. Instale o docker-compose
 2. Instale as bibliotecas presentes no requirements.txt
 3. Crie um arquivo chamado ```.env.local``` com as informações necessárias, seguindo o exemplo de ```.env.local.example```.
 4. Crie as pastas que estão no .gitignore
 
-### Inicialize o docker
+## Inicialize o docker
 
 1. Entre em uma das pastas com nome "Dockercompose"
 2. Inicialize a instância com o comando:
@@ -18,27 +18,46 @@ sudo docker-compose up -d # inicializa os nós e o kibana
 
 Obs.: para mais informações leia [README-DOCKER](./README-DOCKER.md)
 
+## Execute de uma vez
+
+O script ```main.py``` executará a indexação, a busca e comparação e salvará os resultados na pasta ```/logs/<nodes>_nodes_<shards>_shards_<timestamp>```.
+
+```bash
+python3 main.py
+```
+
+## Execute separadamente
+
 ### Execute a indexação
 
-O arquivo ```indexing.py``` executará a indexação e salvará o resultado na pasta ```logs```.
+O script ```indexing.py``` executará a indexação e salvará o resultado na pasta ```/logs```.
 
-1. Execute o arquivo indexing.py no terminal, seguindo um destes exemplos:
-```bash
-python3 indexing.py id   # index_documents
-python3 indexing.py ib   # index_documents_bulk
-```
-2. Também é possível executar com os seguintes parâmetros:
+Os parâmetros são:
+- func (obrigatório): função a ser executada. (id - index_documents, ib - index_documents_bulk)
 - shards: quantidade de shards. Caso não seja passado, a quantidade de shards será estabelecida pela variável de ambiente SHARDS, do ```.env.local```.
-- folder_name: nome da subpasta da pasta logs onde será guardado o log.
+- folder_name: nome da subpasta da pasta ```/logs``` onde será guardado o log.
 ```bash
 indexing.py [-h] func [shards] [folder_name]
 ```
 
+Os exemplos a seguir executam indexações e salvam os logs em ```/logs```:
+```bash
+python3 indexing.py id   # index_documents
+python3 indexing.py ib   # index_documents_bulk
+```
+
 ### Execute a busca
 
-O arquivo ```searching.py``` executará a busca de acordo com os parâmetros e salvará o resultado na pasta ```logs```.
+O script ```searching.py``` executará a busca de acordo com os parâmetros e salvará o resultado na pasta ```logs```.
 
-1. Execute o arquivo searching.py no terminal, seguindo um destes exemplos:
+Os parâmetros são:
+- func (obrigatório): função a ser executada. (ls - linear_search, lm - linear_msearch, ps - parallel_search)
+- folder_name: nome da subpasta da pasta ```/logs``` onde será guardado o log.
+```bash
+searching.py [-h] func [folder_name]
+```
+
+Os exemplos a seguir executam buscas e salvam os logs em ```/logs```:
 ```bash
 python3 searching.py ls   # linear_search
 python3 searching.py lm   # linear_msearch
@@ -47,9 +66,18 @@ python3 searching.py ps   # parallel_search
 
 ### Execute a comparação
 
-O arquivo ```compare.py``` gerará os gráficos com resultados na pasta ```graficos```.
+O script ```compare.py``` fará a comparação e geração de gráficos para os arquivos de log do ```linear_search```, ```linear_msearch``` e ```parallel_search``` que estão dentro da pasta ```/logs```. Para isto é necessário já ter executado a "busca". 
 
-1. Execute o arquivo compare.py no terminal, seguindo um destes exemplos:
+Os parâmetros da execução são:
+- nodes (obrigatório): quantidade de nodes do arquivo de log
+- shards (obrigatório): quantidade de shards do arquivo de log
+- folder_name: subpasta de ```/logs``` onde se encontram os logs.
 ```bash
-python3 compare.py 
+compare.py [-h] nodes shards [folder_name]
 ```
+
+O exemplo a seguir fará comparações e gerará gráficos para os arquivos da pasta ```/logs``` de nomes: ```linear_search_nodes_1_shards_4.json```, ```linear_msearch_nodes_1_shards_4.json``` e ```parallel_nodes_1_shards_4.json```.
+```bash
+python3 compare.py 1 4
+```
+
