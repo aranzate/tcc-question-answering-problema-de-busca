@@ -71,4 +71,8 @@ class Search:
     def shards_quantity(self, index):
         result = self.es.indices.get(index=index)[index]["settings"]["index"]["number_of_shards"]
         return int(result)
+    
+    def close(self):
+        self.es.close()
+        print("Elasticsearch connection closed.")
 
