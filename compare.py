@@ -122,7 +122,7 @@ for i, (title, column, color, time) in enumerate(subplot_titles):
 
 
 # Precision e recall
-paths = [consts.LINEAR_SEARCH_PATH, consts.LINEAR_MSEARCH_PATH, consts.PARALLEL_SEARCH]
+paths = [consts.LINEAR_SEARCH_PATH] # fazer só com 1, pq os resultados são iguais
 
 with open(consts.RESULT_ANSWERS_PATH, 'r') as answers_file:
     answers = json.load(answers_file)
