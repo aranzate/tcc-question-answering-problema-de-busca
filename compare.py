@@ -36,8 +36,6 @@ def main():
     if(folder_name == "") or (folder_name is None): 
         folder_name = f".{consts.SEPARATOR_PATH}{consts.LOGS_PATH}"
 
-    print("final_folder: ", folder_name)
-
     # Ler os arquivos JSON
     linear_search, nodes, shards, time_linear = read_json_to_df(f"{folder_name}linear_search_nodes_{args.nodes}_shards_{args.shards}.json", 'tempo_linear_search', 'time_es')
     linear_msearch, _, _, time_msearch = read_json_to_df(f"{folder_name}linear_msearch_nodes_{args.nodes}_shards_{args.shards}.json", 'tempo_linear_msearch', 'time')

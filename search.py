@@ -1,9 +1,9 @@
 import os
-import json
 from dotenv import load_dotenv
 from elasticsearch import Elasticsearch
-from ssl import create_default_context # TODO: verificar pq disso
+from ssl import create_default_context 
 from pprint import pprint
+import warnings
 
 load_dotenv()
 
@@ -22,6 +22,8 @@ class Search:
         ELASTICSEARCH_PASSWORD = os.getenv("ELASTICSEARCH_PASSWORD")
 
         create_default_context()
+        warnings.filterwarnings("ignore")
+
         self.es = Elasticsearch(
             [f"https://{ELASTICSEARCH_HOST}:{ELASTICSEARCH_PORT}"],
             basic_auth=(ELASTICSEARCH_USERNAME, ELASTICSEARCH_PASSWORD),
