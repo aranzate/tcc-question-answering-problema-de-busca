@@ -49,8 +49,8 @@ def main():
         found_documents = json.load(found_file)
     with open(consts.RESULT_ANSWERS_PATH, 'r') as answers_file:
         answers = json.load(answers_file)
-    precision_at_k(found_documents, answers, 10)
-    recall_at_k(found_documents, answers, 10)
+    precision_at_k(found_documents, answers, 10, nodes, shards)
+    recall_at_k(found_documents, answers, 10, nodes, shards)
 
 if __name__ == '__main__':
     main()

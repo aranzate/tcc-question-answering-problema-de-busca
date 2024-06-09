@@ -7,6 +7,8 @@ __pycache__
 logs 
 results
 graficos
+precision_at_k
+recall_at_k
 
 
 

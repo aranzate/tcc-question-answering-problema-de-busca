@@ -1,7 +1,14 @@
 import matplotlib.pyplot as plt
 import numpy as np
+from datetime import datetime
+import os
 
-def precision_at_k(documentos_encontrados, documentos_relevantes, k_maximo):
+def precision_at_k(documentos_encontrados, documentos_relevantes, k_maximo, nodes, shards):
+    # cria pasta 
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    folder_name = f'precision_at_k/precision_at_{k_maximo}_nodes_{nodes}_shards_{shards}_{timestamp}'
+    os.makedirs(folder_name)
+
     k_valores = range(1, k_maximo + 1)
     precisao_valores = []
     desvio_padrao_valores = []
@@ -22,13 +29,17 @@ def precision_at_k(documentos_encontrados, documentos_relevantes, k_maximo):
 
         plt.subplot(1, len(k_valores), k)
         plt.boxplot(desvio_padrao_valores)
-        print(desvio_padrao_valores)
+        #print(desvio_padrao_valores)
         
         plt.title(f'k={k}')
         plt.grid(True)
 
         media_aritmetica_k = np.mean(precisoes)
         precisao_valores.append(media_aritmetica_k)
+
+    
+    fig_path = f'{folder_name}/boxplot_{k_maximo}_nodes_{nodes}_shards_{shards}.png'
+    plt.savefig(fig_path)
 
     # Plot do gráfico final
     plt.figure(figsize=(10, 6))
@@ -39,11 +50,13 @@ def precision_at_k(documentos_encontrados, documentos_relevantes, k_maximo):
     plt.grid(True)
     plt.xticks(k_valores)
     plt.tight_layout()
-    plt.show()
+
+    fig_path = f'{folder_name}/precision_at_{k_maximo}_nodes_{nodes}_shards_{shards}.png'
+    plt.savefig(fig_path)
+    
+    #plt.show()
         
-
-
-def recall_at_k(documentos_encontrados, documentos_relevantes, k_maximo):
+def recall_at_k(documentos_encontrados, documentos_relevantes, k_maximo, nodes, shards):
     k_valores = range(1, k_maximo + 1)
     recall_valores = []
     desvio_padrao_valores = []
@@ -81,4 +94,12 @@ def recall_at_k(documentos_encontrados, documentos_relevantes, k_maximo):
     plt.grid(True)
     
     plt.tight_layout()
-    plt.show()
+
+    # cria pasta e salva
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    folder_name = f'recall_at_k/recall_at_{k}_nodes_{nodes}_shards_{shards}_{timestamp}'
+    os.makedirs(folder_name)
+    fig_path = f'{folder_name}/recall_at_{k}_nodes_{nodes}_shards_{shards}.png'
+    plt.savefig(fig_path)
+    
+    #plt.show()
