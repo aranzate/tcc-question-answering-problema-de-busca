@@ -15,6 +15,8 @@ sudo docker-compose up -d # inicializa os nós e o kibana
 3. Para conferir se o kibana está executando, acesse: http://localhost:5601/app/discover
 4. Na pasta do projeto, crie um arquivo ```.env``` e insira as chaves e variáveis de ambiente da instância do docker nele.
 
+Obs.: para mais informações leia [README-DOCKER](./README-DOCKER.md)
+
 ### Execute o arquivo de indexação
 
 1. Execute o arquivo indexing.py no terminal, seguindo um destes exemplos:
