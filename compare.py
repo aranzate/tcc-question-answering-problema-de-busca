@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import json
 import os
 import consts
+from datetime import datetime
 
 # Função para ler JSON e extrair tempos de consulta
 def read_json_to_df(filepath, tempo_col_name, time_key):
@@ -21,7 +22,7 @@ def read_json_to_df(filepath, tempo_col_name, time_key):
     return df, nodes, shards, time_python_function
 
 # Ler os arquivos JSON
-linear_search, nodes, shards, time_linear = read_json_to_df(f"./logs/{consts.LINEAR_SEARCH_PATH}.json", 'tempo_linear_search', 'time_python')
+linear_search, nodes, shards, time_linear = read_json_to_df(f"./logs/{consts.LINEAR_SEARCH_PATH}.json", 'tempo_linear_search', 'time_es')
 linear_msearch, _, _, time_msearch = read_json_to_df(f"./logs/{consts.LINEAR_MSEARCH_PATH}.json", 'tempo_linear_msearch', 'time')
 parallel_search, _, _, time_parallel = read_json_to_df(f"./logs/{consts.PARALLEL_SEARCH}.json", 'tempo_parallel_search', 'time')
 
@@ -77,10 +78,15 @@ create_subplot(axs[4], df['linear_minus_msearch'], 'Linear Search - Linear Msear
 # Subplot 6: Combinação linear_search x parallel_search
 create_subplot(axs[5], df['linear_minus_parallel'], 'Linear Search - Parallel Search', 'teal', 'Linear Search - Parallel Search', None)
 
+# cria pasta 
+timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+folder_name = f'graficos/graficos_nodes_{nodes}_shards_{shards}_{timestamp}'
+os.makedirs(folder_name)
+
 # Salvar a figura com todos os subplots
-fig_all_path = f'./graficos/grafico_shards_{shards}_nodes_{nodes}.png'
+fig_all_path = f'{folder_name}/grafico_nodes_{nodes}_shards_{shards}.png'
 plt.savefig(fig_all_path)
-plt.show()
+# plt.show()
 
 # Salvar cada subplot individualmente
 subplot_titles = [
@@ -108,6 +114,6 @@ for i, (title, column, color, time) in enumerate(subplot_titles):
         ax.set_ylim(y_limits)
     
     # Caminho completo do arquivo
-    fig_path = f'./graficos/grafico_{title.replace(" ", "_").lower()}_shards_{shards}_nodes_{nodes}.png'
+    fig_path = f'{folder_name}/grafico_{title.replace(" ", "_").lower()}_nodes_{nodes}_shards_{shards}.png'
     plt.savefig(fig_path)
     plt.close(fig)

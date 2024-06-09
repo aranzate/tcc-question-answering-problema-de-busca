@@ -1,4 +1,5 @@
 .env
+.env.local
 __pycache__
 .venv
 
@@ -17,3 +18,4 @@ graficos
 
 # ignore
 ignorar
+teste.py

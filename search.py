@@ -64,4 +64,11 @@ class Search:
 
     def retrieve_document(self, index, id):
         return self.es.get(index=index, id=id)
+    
+    def nodes_quantity(self):
+        return self.es.nodes.stats()["_nodes"]["total"]
+    
+    def shards_quantity(self, index):
+        result = self.es.indices.get(index=index)[index]["settings"]["index"]["number_of_shards"]
+        return int(result)
 

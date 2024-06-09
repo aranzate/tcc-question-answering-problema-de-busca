@@ -15,7 +15,7 @@ def write_log(function_name, origin, action_name, actions, timestamp, nodes, sha
         "actions": actions
     } 
 
-    with open(f"{consts.LOGS_PATH}{function_name}_{timestamp}.json", 'w', encoding='utf-8') as json_file:
+    with open(f"{consts.LOGS_PATH}{function_name}_nodes_{nodes}_shards_{shards}_{timestamp}.json", 'w', encoding='utf-8') as json_file:
         json.dump(data_log, json_file, indent=4)
 
 # Executa uma função e retorna o id, o tempo e o retorno da função 
