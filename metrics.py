@@ -2,12 +2,16 @@ import matplotlib.pyplot as plt
 import numpy as np
 from datetime import datetime
 import os
+import sys
 
-def precision_at_k(documentos_encontrados, documentos_relevantes, k_maximo, nodes, shards):
-    # cria pasta 
-    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    folder_name = f'precision_at_k/precision_at_{k_maximo}_nodes_{nodes}_shards_{shards}_{timestamp}'
-    os.makedirs(folder_name)
+def find_hits(log_search, id_searched):
+    if(log_search['actions'][int(id_searched)-1]['id'] == int(id_searched)):
+        return log_search['actions'][int(id_searched)-1]['hits']
+    print("Erro: id de documento não corresponde.")
+    sys.exit(1)
+
+
+def precision_at_k(documentos_encontrados, documentos_relevantes, k_maximo, folder_name, log_name):
 
     k_valores = range(1, k_maximo + 1)
     precisao_valores = []
@@ -18,7 +22,7 @@ def precision_at_k(documentos_encontrados, documentos_relevantes, k_maximo, node
     for k in k_valores:
         precisoes = []
         for id, relevant_docs in documentos_relevantes.items():
-            documentos_encontrados_query = documentos_encontrados.get(id, [])
+            documentos_encontrados_query = find_hits(documentos_encontrados, id)
             k_documentos_encontrados = documentos_encontrados_query[:k]
             k_relevantes = [doc for doc in k_documentos_encontrados if doc in relevant_docs]
             precisao = len(k_relevantes) / k if k != 0 else 0
@@ -38,7 +42,7 @@ def precision_at_k(documentos_encontrados, documentos_relevantes, k_maximo, node
         precisao_valores.append(media_aritmetica_k)
 
     
-    fig_path = f'{folder_name}/boxplot_{k_maximo}_nodes_{nodes}_shards_{shards}.png'
+    fig_path = f'{folder_name}/boxplot_at_k_{k_maximo}_{log_name}.png'
     plt.savefig(fig_path)
 
     # Plot do gráfico final
@@ -51,12 +55,12 @@ def precision_at_k(documentos_encontrados, documentos_relevantes, k_maximo, node
     plt.xticks(k_valores)
     plt.tight_layout()
 
-    fig_path = f'{folder_name}/precision_at_{k_maximo}_nodes_{nodes}_shards_{shards}.png'
+    fig_path = f'{folder_name}/precision_at_k_{k_maximo}_{log_name}.png'
     plt.savefig(fig_path)
     
     #plt.show()
         
-def recall_at_k(documentos_encontrados, documentos_relevantes, k_maximo, nodes, shards):
+def recall_at_k(documentos_encontrados, documentos_relevantes, k_maximo, folder_name, log_name):
     k_valores = range(1, k_maximo + 1)
     recall_valores = []
     desvio_padrao_valores = []
@@ -64,7 +68,7 @@ def recall_at_k(documentos_encontrados, documentos_relevantes, k_maximo, nodes, 
     for k in k_valores:
         recalls = []
         for query_id, documentos in documentos_relevantes.items():
-            documentos_encontrados_query = documentos_encontrados.get(query_id, [])
+            documentos_encontrados_query = find_hits(documentos_encontrados, query_id)
             documentos_encontrados_k = documentos_encontrados_query[:k]
             documentos_relevantes_set = set(documentos)
             relevante_k = [doc for doc in documentos_encontrados_k if doc in documentos_relevantes_set]
@@ -95,11 +99,7 @@ def recall_at_k(documentos_encontrados, documentos_relevantes, k_maximo, nodes, 
     
     plt.tight_layout()
 
-    # cria pasta e salva
-    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    folder_name = f'recall_at_k/recall_at_{k}_nodes_{nodes}_shards_{shards}_{timestamp}'
-    os.makedirs(folder_name)
-    fig_path = f'{folder_name}/recall_at_{k}_nodes_{nodes}_shards_{shards}.png'
+    fig_path = f'{folder_name}/recall_at_k_{k_maximo}_{log_name}.png'
     plt.savefig(fig_path)
     
     #plt.show()
