@@ -76,5 +76,5 @@ class Search:
     
     def close(self):
         self.es.close()
-        print("Elasticsearch connection closed.")
+        print("Elasticsearch connection closed.\n")
 

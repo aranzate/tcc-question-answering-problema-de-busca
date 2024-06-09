@@ -16,6 +16,7 @@ def call(file_name, *args):
 if __name__ == "__main__":
     # obtém nodes
     es = Search()
+    print("Buscando quantidade de nós.")
     nodes = str(es.nodes_quantity())
     es.close()
 
@@ -38,3 +39,5 @@ if __name__ == "__main__":
     call("searching.py", "ps", folder_name)
     time.sleep(5)
     call("compare.py", nodes, shards, folder_name)
+
+    print("Finalizado. Você pode encontrar os logs na pasta: " + folder_name + "./n/n")
