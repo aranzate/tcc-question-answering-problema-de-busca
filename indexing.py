@@ -31,13 +31,8 @@ def main():
         print("Função não reconhecida. As opções são: " + options)
         sys.exit(1)
 
-    if args.folder_name is not None:
-        folder_name = args.folder_name
-    else:
-        folder_name = ""
-    
     print("INDEXACAO: Executa " + index_function.__name__ + " com " + str(nodes) + " node(s) e " + str(shards) + " shard(s).")
-    index_function(consts.FILE_PATH, consts.ARRAY_NAME, shards, nodes, folder_name)
+    index_function(consts.FILE_PATH, consts.ARRAY_NAME, shards, nodes, args.folder_name)
 
 if __name__ == '__main__':
     main()

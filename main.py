@@ -15,16 +15,16 @@ def call(file_name, function, folder_name):
 if __name__ == "__main__":
     # cria pasta 
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    folder_name = f'testes{consts.SEPARATOR_PATH}teste_{timestamp}'
-    os.makedirs(folder_name + consts.SEPARATOR_PATH + consts.LOGS_PATH)
+    folder_name = f'.{consts.SEPARATOR_PATH}{consts.LOGS_PATH}{timestamp}'
+    os.makedirs(folder_name)
     folder_name += consts.SEPARATOR_PATH
 
     call("indexing.py", "ib", folder_name)
-    time.sleep(10)
-    call("searching.py", "ls", folder_name)
-    time.sleep(5)
-    call("searching.py", "lm", folder_name)
-    time.sleep(5)
-    call("searching.py", "ps", folder_name)
+    # time.sleep(10)
+    # call("searching.py", "ls", folder_name)
+    # time.sleep(5)
+    # call("searching.py", "lm", folder_name)
+    # time.sleep(5)
+    # call("searching.py", "ps", folder_name)
     # time.sleep(5)
     # call("compare.py", "", folder_name)

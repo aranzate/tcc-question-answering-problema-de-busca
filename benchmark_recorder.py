@@ -15,7 +15,10 @@ def write_log(function_name, origin, action_name, actions, timestamp, nodes, sha
         "actions": actions
     } 
 
-    with open(f".{consts.SEPARATOR_PATH}{folder_name}{consts.LOGS_PATH}{function_name}_nodes_{nodes}_shards_{shards}.json", 'w', encoding='utf-8') as json_file:
+    if(folder_name == ""): 
+        folder_name = f".{consts.SEPARATOR_PATH}{consts.LOGS_PATH}"
+
+    with open(f"{folder_name}{function_name}_nodes_{nodes}_shards_{shards}.json", 'w', encoding='utf-8') as json_file:
         json.dump(data_log, json_file, indent=4)
 
 # Executa uma função e retorna o id, o tempo e o retorno da função 
