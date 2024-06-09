@@ -1,5 +1,3 @@
-# tcc-question-answering-problema-de-busca
-
 # Passos iniciais:
 1. Instale o docker-compose
 2. Instale as bibliotecas presentes no requirements.txt
@@ -35,7 +33,7 @@ O script ```indexing.py``` executará a indexação e salvará o resultado na pa
 Os parâmetros são:
 - func (obrigatório): função a ser executada. (id - index_documents, ib - index_documents_bulk)
 - shards: quantidade de shards. Caso não seja passado, a quantidade de shards será estabelecida pela variável de ambiente SHARDS, do ```.env.local```.
-- folder_name: nome da subpasta da pasta ```/logs``` onde será guardado o log.
+- folder_name: nome da subpasta da pasta ```/logs``` onde será guardado o resultado.
 ```bash
 indexing.py [-h] func [shards] [folder_name]
 ```
@@ -52,7 +50,7 @@ O script ```searching.py``` executará a busca de acordo com os parâmetros e sa
 
 Os parâmetros são:
 - func (obrigatório): função a ser executada. (ls - linear_search, lm - linear_msearch, ps - parallel_search)
-- folder_name: nome da subpasta da pasta ```/logs``` onde será guardado o log.
+- folder_name: nome da subpasta da pasta ```/logs``` onde será guardado o resultado.
 ```bash
 searching.py [-h] func [folder_name]
 ```
@@ -71,7 +69,7 @@ O script ```compare.py``` fará a comparação e geração de gráficos para os 
 Os parâmetros da execução são:
 - nodes (obrigatório): quantidade de nodes do arquivo de log
 - shards (obrigatório): quantidade de shards do arquivo de log
-- folder_name: subpasta de ```/logs``` onde se encontram os logs.
+- folder_name: nome da subpasta da pasta ```/logs``` onde estão os logs e será guardado o resultado.
 ```bash
 compare.py [-h] nodes shards [folder_name]
 ```
