@@ -21,10 +21,6 @@ def main():
 
     #Escreva as respostas encontrados no JSON
     queries = find_queries(consts.QUERIES_PATH)
-    answers = find_answers(consts.QUERIES_PATH)
-    output_answers_path = consts.RESULT_ANSWERS_PATH
-    with open(output_answers_path, 'w') as json_file:
-        json.dump(answers, json_file, indent=4)
 
     # Escolhe a função de busca de acordo com os parâmetros passados
     if args.func == 'ls':
@@ -36,7 +32,7 @@ def main():
     else:
         print("Função não reconhecida. As opções são: " + options)
         sys.exit(1)
-        
+
     print("BUSCA: Executa " + search_function.__name__ + " com " + str(nodes) + " node(s) e " + str(shards) + " shard(s).")
     search_function(es, queries, consts.SEARCHED_DOCUMENTS_QUANTITY, shards, nodes)
 

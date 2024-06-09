@@ -2,6 +2,7 @@ import json
 import json
 from datetime import datetime
 from benchmark_recorder import *
+import consts
 
 def linear_search(es, queries, quantity, shards, nodes):
     
@@ -140,3 +141,9 @@ def find_answers(queries_file):
             mapping[question_id].append(context_id)
 
     return mapping
+
+def write_answers():
+    answers = find_answers(consts.QUERIES_PATH)
+    output_answers_path = consts.RESULT_ANSWERS_PATH
+    with open(output_answers_path, 'w') as json_file:
+        json.dump(answers, json_file, indent=4)
