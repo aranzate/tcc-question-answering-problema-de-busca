@@ -22,6 +22,8 @@ def read_json_to_df(filepath, tempo_col_name, time_key):
     
     return df, nodes, shards, time_python_function
 
+print("Gerando gráficos de comparação...")
+
 # Ler os arquivos JSON
 linear_search, nodes, shards, time_linear = read_json_to_df(f"./logs/{consts.LINEAR_SEARCH_PATH}.json", 'tempo_linear_search', 'time_es')
 linear_msearch, _, _, time_msearch = read_json_to_df(f"./logs/{consts.LINEAR_MSEARCH_PATH}.json", 'tempo_linear_msearch', 'time')
@@ -122,6 +124,7 @@ for i, (title, column, color, time) in enumerate(subplot_titles):
 
 
 # Precision e recall
+print("Gerando gráficos de precision e recall...")
 paths = [consts.LINEAR_SEARCH_PATH] # fazer só com 1, pq os resultados são iguais
 
 with open(consts.RESULT_ANSWERS_PATH, 'r') as answers_file:
