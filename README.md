@@ -27,6 +27,12 @@ O arquivo ```indexing.py``` executará a indexação e salvará o resultado na p
 python3 indexing.py id   # index_documents
 python3 indexing.py ib   # index_documents_bulk
 ```
+2. Também é possível executar com os seguintes parâmetros:
+- shards: quantidade de shards. Caso não seja passado, a quantidade de shards será estabelecida pela variável de ambiente SHARDS, do ```.env.local```.
+- folder_name: nome da subpasta da pasta logs onde será guardado o log.
+```bash
+indexing.py [-h] func [shards] [folder_name]
+```
 
 ### Execute a busca
 
