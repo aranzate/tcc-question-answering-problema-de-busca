@@ -7,7 +7,6 @@ from search import Search
 
 def call(file_name, *args):
     command = ["python3", file_name] + list(args)
-    print(command)
     result = subprocess.run(command, capture_output=True, text=True)
 
     print(result.stdout)
@@ -17,11 +16,11 @@ def call(file_name, *args):
 if __name__ == "__main__":
     # obtém nodes
     es = Search()
-    nodes = es.nodes_quantity()
+    nodes = str(es.nodes_quantity())
     es.close()
 
     # obtém shards 
-    shards = consts.SHARDS
+    shards = str(consts.SHARDS)
 
     # cria pasta 
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
@@ -31,11 +30,11 @@ if __name__ == "__main__":
 
     # chama arquivos
     call("indexing.py", "ib", shards, folder_name)
-    # time.sleep(10)
-    # call("searching.py", "ls", folder_name)
-    # time.sleep(5)
-    # call("searching.py", "lm", folder_name)
-    # time.sleep(5)
-    # call("searching.py", "ps", folder_name)
-    # time.sleep(5)
-    # call("compare.py", "", folder_name)
+    time.sleep(10)
+    call("searching.py", "ls", folder_name)
+    time.sleep(5)
+    call("searching.py", "lm", folder_name)
+    time.sleep(5)
+    call("searching.py", "ps", folder_name)
+    time.sleep(5)
+    call("compare.py", nodes, shards, folder_name)
