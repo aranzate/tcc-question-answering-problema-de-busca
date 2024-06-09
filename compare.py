@@ -86,7 +86,7 @@ os.makedirs(folder_name)
 # Salvar a figura com todos os subplots
 fig_all_path = f'{folder_name}/grafico_nodes_{nodes}_shards_{shards}.png'
 plt.savefig(fig_all_path)
-plt.show()
+# plt.show()
 
 # Salvar cada subplot individualmente
 subplot_titles = [
