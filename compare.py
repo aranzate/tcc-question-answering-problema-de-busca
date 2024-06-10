@@ -86,6 +86,7 @@ def main():
     axs[3].grid(True)
     axs[3].set_xlim(x_limits)
     axs[3].set_ylim(y_limits)
+    axs[3].legend(loc='upper center', bbox_to_anchor=(0.5, -0.15), ncol=3)
 
     # Subplot 5: Combinação linear_search x linear_msearch
     create_subplot(axs[4], df['linear_minus_msearch'], 'Linear Search - Linear Msearch', 'purple', 'Linear Search - Linear Msearch', None)
@@ -122,6 +123,7 @@ def main():
             ax.grid(True)
             ax.set_xlim(x_limits)
             ax.set_ylim(y_limits)
+            ax.legend(loc='upper center', bbox_to_anchor=(0.5, -0.05), ncol=3)
         
         # Caminho completo do arquivo
         fig_path = f'{folder_name}/grafico_{title.replace(" ", "_").lower()}_nodes_{nodes}_shards_{shards}.png'
