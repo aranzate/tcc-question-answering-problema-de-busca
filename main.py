@@ -20,24 +20,27 @@ if __name__ == "__main__":
     nodes = str(es.nodes_quantity())
     es.close()
 
-    # obtém shards 
-    shards = str(consts.SHARDS)
+    shards = [1,2,4,8,16,32]
 
-    # cria pasta 
-    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    folder_name = f'.{consts.SEPARATOR_PATH}{consts.LOGS_PATH}{nodes}_nodes_{shards}_shards_{timestamp}'
-    os.makedirs(folder_name)
-    folder_name += consts.SEPARATOR_PATH
+    for i in shards:
+        # obtém shards 
+        shards = str(i)
 
-    # chama arquivos
-    call("indexing.py", "ib", shards, folder_name)
-    time.sleep(10)
-    call("searching.py", "ls", folder_name)
-    time.sleep(5)
-    call("searching.py", "lm", folder_name)
-    time.sleep(5)
-    call("searching.py", "ps", folder_name)
-    time.sleep(5)
-    call("compare.py", nodes, shards, folder_name)
+        # cria pasta 
+        timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        folder_name = f'.{consts.SEPARATOR_PATH}{consts.LOGS_PATH}{nodes}_nodes_{shards}_shards_{timestamp}'
+        os.makedirs(folder_name)
+        folder_name += consts.SEPARATOR_PATH
 
-    print("Finalizado. Você pode encontrar os logs na pasta: " + folder_name + "./n/n")
+        # chama arquivos
+        call("indexing.py", "ib", shards, folder_name)
+        time.sleep(10)
+        call("searching.py", "ls", folder_name)
+        time.sleep(5)
+        call("searching.py", "lm", folder_name)
+        time.sleep(5)
+        call("searching.py", "ps", folder_name)
+        time.sleep(5)
+        call("compare.py", nodes, shards, folder_name)
+
+        print("Finalizado. Você pode encontrar os logs na pasta: " + folder_name + ".\n\n")
