@@ -18,10 +18,11 @@ Obs.: para mais informações leia [README-DOCKER](./README-DOCKER.md)
 
 ## Execute de uma vez
 
-O script ```main.py``` executará a indexação, a busca e comparação e salvará os resultados na pasta ```/logs/<nodes>_nodes_<shards>_shards_<timestamp>```.
+O script ```script.sh``` executará a indexação, a busca e comparação e salvará os resultados na pasta ```/logs/<nodes>_nodes_<shards>_shards_<timestamp>```.
 
 ```bash
-python3 main.py
+chmod +x script.sh
+bash script.sh
 ```
 
 ## Execute separadamente

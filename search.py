@@ -15,7 +15,7 @@ com os métodos que interagem com o servidor do ElasticSearch
 class Search:
 
     # Inicializa o cliente do ElasticSearch
-    def __init__(self):
+    def __init__(self, no_message=False):
         ELASTICSEARCH_HOST = os.getenv("ELASTICSEARCH_HOST")
         ELASTICSEARCH_PORT = os.getenv("ELASTICSEARCH_PORT")
         ELASTICSEARCH_USERNAME = os.getenv("ELASTICSEARCH_USERNAME")
@@ -29,8 +29,11 @@ class Search:
             basic_auth=(ELASTICSEARCH_USERNAME, ELASTICSEARCH_PASSWORD),
             verify_certs=False
         )
-        client_info = self.es.info()
-        print('Connected to Elasticsearch!')
+
+        if(no_message == False):
+            print('Connected to Elasticsearch!')
+            
+        # client_info = self.es.info()
         # pprint(client_info.body)
 
     # Deleta e cria um novo índice de nome <index>
