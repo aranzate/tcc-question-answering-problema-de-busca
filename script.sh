@@ -3,9 +3,8 @@
 source .env.local
 
 nodes=$(python3 get_nodes.py)
-shards_list=(1 2 4 8 16 32)
+shards_list=(1 2 4 12 8 16 32)
 
-# Loop sobre cada número na lista
 for shards in "${shards_list[@]}"; do
     timestamp=$(date +"%Y-%m-%d_%H-%M-%S") 
     folder_name=".${SEPARATOR_PATH}${LOGS_PATH}${nodes}_nodes_${shards}_shards_${timestamp}"
