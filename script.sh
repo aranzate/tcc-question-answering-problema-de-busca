@@ -7,7 +7,8 @@ shards_list=(1 2 4 8 12 16 32)
 
 for shards in "${shards_list[@]}"; do
     timestamp=$(date +"%Y-%m-%d_%H-%M-%S") 
-    folder_name=".${SEPARATOR_PATH}${LOGS_PATH}${nodes}_nodes_${shards}_shards_${timestamp}"
+    # folder_name=".${SEPARATOR_PATH}${LOGS_PATH}${nodes}_nodes_${shards}_shards_${timestamp}"
+    folder_name=".${SEPARATOR_PATH}${LOGS_PATH}${nodes}_nodes_${shards}_shards"
     mkdir "$folder_name"
     folder_name="${folder_name}/"
 
