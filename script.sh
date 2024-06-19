@@ -3,7 +3,7 @@
 source .env.local
 
 nodes=$(python3 get_nodes.py)
-shards_list=(1)
+shards_list=(1 2 4 8 12 16 32)
 
 for shards in "${shards_list[@]}"; do
     timestamp=$(date +"%Y-%m-%d_%H-%M-%S") 
