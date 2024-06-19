@@ -3,7 +3,7 @@
 source .env.local
 
 nodes=$(python3 get_nodes.py)
-shards_list=(1 2 4 12 8 16 32)
+shards_list=(1)
 
 for shards in "${shards_list[@]}"; do
     timestamp=$(date +"%Y-%m-%d_%H-%M-%S") 
@@ -11,11 +11,11 @@ for shards in "${shards_list[@]}"; do
     mkdir "$folder_name"
     folder_name="${folder_name}/"
 
-    # python3 indexing.py ib $shards $folder_name
-    # python3 searching.py ls $folder_name
-    # python3 searching.py lm $folder_name
-    # python3 searching.py ps $folder_name
-    # python3 compare.py $nodes $shards $folder_name
+    python3 indexing.py ib $shards $folder_name
+    python3 searching.py ls $folder_name
+    python3 searching.py lm $folder_name
+    python3 searching.py ps $folder_name
+    python3 compare.py $nodes $shards $folder_name
 done
 
 

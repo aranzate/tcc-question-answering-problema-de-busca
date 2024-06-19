@@ -12,7 +12,6 @@ def find_hits(log_search, id_searched):
 
 
 def precision_at_k(documentos_encontrados, documentos_relevantes, k_maximo, folder_name, log_name):
-
     k_valores = range(1, k_maximo + 1)
     precisao_valores = []
     desvio_padrao_valores = []
@@ -33,15 +32,13 @@ def precision_at_k(documentos_encontrados, documentos_relevantes, k_maximo, fold
 
         plt.subplot(1, len(k_valores), k)
         plt.boxplot(desvio_padrao_valores)
-        #print(desvio_padrao_valores)
-        
         plt.title(f'k={k}')
         plt.grid(True)
+        plt.ylim(0, 0.5)  # Definindo limite para o eixo y
 
         media_aritmetica_k = np.mean(precisoes)
         precisao_valores.append(media_aritmetica_k)
 
-    
     fig_path = f'{folder_name}/boxplot_at_k_{k_maximo}_{log_name}.png'
     plt.savefig(fig_path)
 
@@ -53,12 +50,12 @@ def precision_at_k(documentos_encontrados, documentos_relevantes, k_maximo, fold
     plt.title('Precision@k Gráfico')
     plt.grid(True)
     plt.xticks(k_valores)
+    # plt.ylim(0, 1)  # Definindo limite para o eixo y
     plt.tight_layout()
 
     fig_path = f'{folder_name}/precision_at_k_{k_maximo}_{log_name}.png'
     plt.savefig(fig_path)
-    
-    #plt.show()
+
         
 def recall_at_k(documentos_encontrados, documentos_relevantes, k_maximo, folder_name, log_name):
     k_valores = range(1, k_maximo + 1)
@@ -96,6 +93,7 @@ def recall_at_k(documentos_encontrados, documentos_relevantes, k_maximo, folder_
     plt.xlabel('Desvio Padrão do Recall@k')
     plt.title('Boxplot do Desvio Padrão do Recall@k')
     plt.grid(True)
+    plt.ylim(0, 0.5)
     
     plt.tight_layout()
 
