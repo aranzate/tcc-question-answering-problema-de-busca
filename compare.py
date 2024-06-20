@@ -95,7 +95,7 @@ def main():
     create_subplot(axs[5], df['linear_minus_parallel'], 'Linear Search - Parallel Search', 'teal', 'Linear Search - Parallel Search', None)
 
     # Salvar a figura com todos os subplots
-    fig_all_path = f'{folder_name}/n{nodes}_s{shards}_graficos.png'
+    fig_all_path = f'{folder_name}/n{nodes}_s{shards}_-_graficos.png'
     plt.savefig(fig_all_path)
     # plt.show()
 
