@@ -39,6 +39,7 @@ def precision_at_k(documentos_encontrados, documentos_relevantes, k_maximo, fold
         media_aritmetica_k = np.mean(precisoes)
         precisao_valores.append(media_aritmetica_k)
 
+    plt.figtext(0.5, 0.95, f'{fun_name} - Boxplots em K', ha='center', va='top', fontsize=14, color='black')
     fig_path = f'{folder_name}/{fun_name.replace(" ", "_").lower()}_boxplot_at_k_{k_maximo}.png'
     plt.savefig(fig_path)
 
