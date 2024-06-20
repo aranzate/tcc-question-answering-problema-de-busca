@@ -18,6 +18,23 @@ def read_json(filepath):
     return time_python_function, mean, variance, standard_deviation
 
 
+def params():
+    params = ["time_python_function", "mean", "variance", "standard_deviation"]
+    titles = ["Tempo Python(s) X Quantidade de Shards", "Média do tempo de busca por query X Quantidade de Shards", "Variância do tempo de busca por query X Quantidade de Shards", "Desvio padrão do tempo de busca por query X Quantidade de Shards"]
+    result = []
+
+    for i in range (len(params)):
+        result.append(
+            {
+                "param": params[i],
+                "title": titles[i],
+                "total": []
+            }
+        )
+
+    return result
+
+
 def main():
     parser = argparse.ArgumentParser(description='Executa uma função específica com base no parâmetro passado.')
     parser.add_argument('folder_name', nargs="?", default="", help='Nome da pasta')
