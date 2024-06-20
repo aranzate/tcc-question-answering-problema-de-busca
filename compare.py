@@ -53,7 +53,7 @@ def main():
 
     # Definir os limites dos eixos x e y
     x_limits = (df['id'].min(), df['id'].max())
-    y_limits = (0,.05) #(min(df['tempo_linear_search'].min(), df['tempo_linear_msearch'].min()), max(df['tempo_linear_search'].max(), df['tempo_linear_msearch'].max()))
+    y_limits = (0,.15) #(min(df['tempo_linear_search'].min(), df['tempo_linear_msearch'].min()), max(df['tempo_linear_search'].max(), df['tempo_linear_msearch'].max()))
 
     # Função para criar e salvar cada subplot
     def create_subplot(ax, data, label, color, title, time):
@@ -101,12 +101,12 @@ def main():
 
     # Salvar cada subplot individualmente
     subplot_titles = [
-        ('Linear Search', 'tempo_linear_search', 'blue', time_linear),
-        ('Linear MSearch', 'tempo_linear_msearch', 'red', time_msearch),
-        ('Parallel Search', 'tempo_parallel_search', 'green', time_parallel),
-        ('Comparação dos Tempos de Resposta das Consultas', None, None, None),
-        ('Linear Search - Linear Msearch', 'linear_minus_msearch', 'purple', None),
-        ('Linear Search - Parallel Search', 'linear_minus_parallel', 'teal', None)
+        (f"Linear Search n{nodes} s{shards}", 'tempo_linear_search', 'blue', time_linear),
+        (f"Linear MSearch n{nodes} s{shards}", 'tempo_linear_msearch', 'red', time_msearch),
+        (f"Parallel Search n{nodes} s{shards}", 'tempo_parallel_search', 'green', time_parallel),
+        (f"Comparação dos Tempos de Resposta das Consultas n{nodes} s{shards}", None, None, None),
+        (f"Linear Search - Linear Msearch n{nodes} s{shards}", 'linear_minus_msearch', 'purple', None),
+        (f"Linear Search - Parallel Search n{nodes} s{shards}", 'linear_minus_parallel', 'teal', None)
     ]
 
     for i, (title, column, color, time) in enumerate(subplot_titles):
@@ -126,7 +126,7 @@ def main():
             ax.legend(loc='upper center', bbox_to_anchor=(0.5, -0.05), ncol=3)
         
         # Caminho completo do arquivo
-        fig_path = f'{folder_name}/grafico_{title.replace(" ", "_").lower()}_nodes_{nodes}_shards_{shards}.png'
+        fig_path = f'{folder_name}/grafico_{title.replace(" ", "_").lower()}.png'
         plt.savefig(fig_path)
         plt.close(fig)
 
