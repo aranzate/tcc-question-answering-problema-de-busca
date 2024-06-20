@@ -18,7 +18,7 @@ Obs.: para mais informações leia [README-DOCKER](./README-DOCKER.md)
 
 ## Execute de uma vez
 
-O script ```script.sh``` executará a indexação, a busca e comparação e salvará os resultados na pasta ```/logs/<nodes>_nodes_<shards>_shards_<timestamp>```.
+O script ```script.sh``` executará a indexação, a busca e comparação e salvará os resultados na pasta ```/logs/n<nodes>_s<shards>```.
 
 ```bash
 chmod +x script.sh
@@ -75,7 +75,7 @@ Os parâmetros da execução são:
 compare.py [-h] nodes shards [folder_name]
 ```
 
-O exemplo a seguir fará comparações e gerará gráficos para os arquivos da pasta ```/logs``` de nomes: ```linear_search_nodes_1_shards_4.json```, ```linear_msearch_nodes_1_shards_4.json``` e ```parallel_nodes_1_shards_4.json```.
+O exemplo a seguir fará comparações e gerará gráficos para os arquivos da pasta ```/logs``` de nomes: ```n1_s4_log_linear_search.json```, ```n1_s4_log_linear_msearch.json``` e ```n1_s4_log_parallel_search.json```.
 ```bash
 python3 compare.py 1 4
 ```
