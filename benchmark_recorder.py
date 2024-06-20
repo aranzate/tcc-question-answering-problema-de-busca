@@ -4,7 +4,8 @@ import json
 import consts
 
 # Escreve um log em formato json 
-def write_log(function_name, origin, action_name, actions, timestamp, nodes, shards, time_python_function, folder_name=""):
+def write_log(function_name, origin, action_name, actions, timestamp, nodes, shards, time_python_function, folder_name="", mean=None, variance=None, standard_deviation=None):
+    
     data_log = {
         "function_name": function_name,
         "origin": origin,
@@ -15,10 +16,17 @@ def write_log(function_name, origin, action_name, actions, timestamp, nodes, sha
         "actions": actions
     } 
 
+    if(mean is not None):
+        data_log["mean"]=mean
+    if(variance is not None):
+        data_log["variance"]=variance
+    if(standard_deviation is not None):
+        data_log["standard_deviation"]=standard_deviation
+
     if(folder_name == ""): 
         folder_name = f".{consts.SEPARATOR_PATH}{consts.LOGS_PATH}"
 
-    with open(f"{folder_name}{function_name}_nodes_{nodes}_shards_{shards}.json", 'w', encoding='utf-8') as json_file:
+    with open(f"{folder_name}n{nodes}_s{shards}_log_{function_name}.json", 'w', encoding='utf-8') as json_file:
         json.dump(data_log, json_file, indent=4)
 
 # Executa uma função e retorna o id, o tempo e o retorno da função 
