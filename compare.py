@@ -37,7 +37,7 @@ def main():
         folder_name = f".{consts.SEPARATOR_PATH}{consts.LOGS_PATH}"
 
     # Ler os arquivos JSON
-    linear_search, nodes, shards, time_linear = read_json_to_df(f"{folder_name}n{args.nodes}_s{args.shards}_log_linear_search.json", 'tempo_linear_search', 'time_es')
+    linear_search, nodes, shards, time_linear = read_json_to_df(f"{folder_name}n{args.nodes}_s{args.shards}_log_linear_search.json", 'tempo_linear_search', 'time')
     linear_msearch, _, _, time_msearch = read_json_to_df(f"{folder_name}n{args.nodes}_s{args.shards}_log_linear_msearch.json", 'tempo_linear_msearch', 'time')
     parallel_search, _, _, time_parallel = read_json_to_df(f"{folder_name}n{args.nodes}_s{args.shards}_log_parallel_search.json", 'tempo_parallel_search', 'time')
 
