@@ -30,7 +30,7 @@ def main():
     parser.add_argument('folder_name', nargs="?", default="", help='Nome da pasta')
     args = parser.parse_args()
     
-    print("Gerando gráficos de comparação...")
+    print("GRAFICOS: Gera gráficos de comparação")
 
     folder_name = args.folder_name
     if(folder_name == "") or (folder_name is None): 
@@ -132,7 +132,7 @@ def main():
 
 
     # Precision e recall
-    print("Gerando gráficos de precision e recall...")
+    print("GRAFICOS: Gera gráficos de precision e recall")
     
     with open(consts.RESULT_ANSWERS_PATH, 'r') as answers_file:
         answers = json.load(answers_file)
