@@ -3,7 +3,7 @@
 source .env.local
 
 nodes=$(python3 get_nodes.py)
-shards_list=(2)
+shards_list=(1 2 4 8 12 16 32)
 
 for shards in "${shards_list[@]}"; do
     # Nome da pasta com timestamp 
