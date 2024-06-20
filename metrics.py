@@ -84,7 +84,7 @@ def recall_at_k(documentos_encontrados, documentos_relevantes, k_maximo, folder_
     plt.errorbar(k_valores, recall_valores, yerr=desvio_padrao_valores, fmt='o-', ecolor='r', capsize=5)
     plt.xlabel('k')
     plt.ylabel('Recall@k (Média)')
-    plt.title('Recall@k Gráfico')
+    plt.title(f'{fun_name} - Recall@k Gráfico')
     plt.grid(True)
     plt.xticks(k_valores)
     
@@ -97,7 +97,7 @@ def recall_at_k(documentos_encontrados, documentos_relevantes, k_maximo, folder_
     
     plt.tight_layout()
 
-    plt.title(f'{fun_name}')
+    plt.title(f'{fun_name} - Boxplot')
     fig_path = f'{folder_name}/{fun_name.replace(" ", "_").lower()}_recall_at_k_{k_maximo}.png'
     plt.savefig(fig_path)
     

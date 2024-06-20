@@ -89,10 +89,10 @@ def main():
     axs[3].legend(loc='upper center', bbox_to_anchor=(0.5, -0.15), ncol=3)
 
     # Subplot 5: Combinação linear_search x linear_msearch
-    create_subplot(axs[4], df['linear_minus_msearch'], 'Linear Search - Linear Msearch', 'purple', 'Linear Search - Linear Msearch', None)
+    create_subplot(axs[4], df['linear_minus_msearch'], 'Linear Search minus Linear Msearch', 'purple', 'Linear Search minus Linear Msearch', None)
 
     # Subplot 6: Combinação linear_search x parallel_search
-    create_subplot(axs[5], df['linear_minus_parallel'], 'Linear Search - Parallel Search', 'teal', 'Linear Search - Parallel Search', None)
+    create_subplot(axs[5], df['linear_minus_parallel'], 'Linear Search minus Parallel Search', 'teal', 'Linear Search minus Parallel Search', None)
 
     # Salvar a figura com todos os subplots
     fig_all_path = f'{folder_name}/n{nodes}_s{shards}_-_graficos.png'
