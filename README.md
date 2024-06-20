@@ -2,7 +2,6 @@
 1. Instale o docker-compose
 2. Instale as bibliotecas presentes no requirements.txt
 3. Crie um arquivo chamado ```.env.local``` com as informações necessárias, seguindo o exemplo de ```.env.local.example```.
-4. Crie as pastas que estão no .gitignore
 
 ## Inicialize o docker
 
