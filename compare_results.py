@@ -9,65 +9,26 @@ def read_json(filepath):
 
     return data
 
-def params():
-    result = [
-        {
-            "param": "time_python_function",
-            "title": "Tempo de Execução da Função(s) X Quantidade de Shards",
-            "min": 0,
-            "max": 210,
-            "total": [],
-            "ls": [],
-            "lm": [],
-            "ps": []
-        },
-        {
-            "param": "mean",
-            "title": "Média do Tempo de Busca por Query X Quantidade de Shards",
-            "min": 0,
-            "max": 0.08,
-            "total": [],
-            "ls": [],
-            "lm": [],
-            "ps": []
-        },
-        {
-            "param": "variance",
-            "title": "Variância do Tempo de Busca por Query X Quantidade de Shards",
-            "min": 0,
-            "max": 0.0006,
-            "total": [],
-            "ls": [],
-            "lm": [],
-            "ps": []
-        },
-        {
-            "param": "standard_deviation",
-            "title": "Desvio Padrão do Tempo de Busca por Query X Quantidade de Shards",
-            "min": 0,
-            "max": 0.024,
-            "total": [],
-            "ls": [],
-            "lm": [],
-            "ps": []
-        },
-    ]
+def create_empty_attribute(param, title, min_value, max_value):
+    return {
+        "param": param,
+        "title": title,
+        "min": min_value,
+        "max": max_value,
+        "total": [],
+        "ls": [],
+        "lm": [],
+        "ps": []
+    }
 
-    return result
-
-def get_data(nodes_list, shards_list, folder_name):
-
-    attributes = params()     
-
+def get_filled_attributes(attributes, nodes_list, shards_list, folder_name):
     for nodes in nodes_list:
-
         for attribute in attributes:
             attribute["ls"] = []
             attribute["lm"] = []
             attribute["ps"] = []
 
         for shards in shards_list:
-
             json_data = read_json(f"{folder_name}n{nodes}_s{shards}_log_linear_search.json")
             for attribute in attributes:
                 attribute["ls"].append(json_data[attribute["param"]])
@@ -99,7 +60,14 @@ def main():
 
     nodes_list = [1,2,3,4]
     shards_list = [1,2,4,8,12,16,32]
-    attributes = get_data(nodes_list, shards_list, folder_name)
+    empty_attributes = [
+        create_empty_attribute("time_python_function", "Tempo de Execução da Função(s) X Quantidade de Shards", 0, 210),
+        create_empty_attribute("mean", "Média do Tempo de Busca por Query X Quantidade de Shards", 0, 0.08),
+        create_empty_attribute("variance", "Variância do Tempo de Busca por Query X Quantidade de Shards", 0, 0.0006),
+        create_empty_attribute("standard_deviation", "Desvio Padrão do Tempo de Busca por Query X Quantidade de Shards", 0, 0.024)
+    ]
+
+    attributes = get_filled_attributes(empty_attributes, nodes_list, shards_list, folder_name)
 
     print("GRAFICOS: Gera gráficos de comparação com todos os logs")
     
