@@ -1,5 +1,5 @@
 from search import Search
 
-es = Search(True)
+es = Search()
 nodes = str(es.nodes_quantity())
 print(nodes)

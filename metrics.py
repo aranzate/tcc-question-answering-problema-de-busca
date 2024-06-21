@@ -11,7 +11,7 @@ def find_hits(log_search, id_searched):
     sys.exit(1)
 
 
-def precision_at_k(documentos_encontrados, documentos_relevantes, k_maximo, folder_name, log_name):
+def precision_at_k(documentos_encontrados, documentos_relevantes, k_maximo, folder_name, fun_name):
     k_valores = range(1, k_maximo + 1)
     precisao_valores = []
     desvio_padrao_valores = []
@@ -39,7 +39,8 @@ def precision_at_k(documentos_encontrados, documentos_relevantes, k_maximo, fold
         media_aritmetica_k = np.mean(precisoes)
         precisao_valores.append(media_aritmetica_k)
 
-    fig_path = f'{folder_name}/boxplot_at_k_{k_maximo}_{log_name}.png'
+    plt.figtext(0.5, 0.95, f'{fun_name} - Boxplots em K', ha='center', va='top', fontsize=14, color='black')
+    fig_path = f'{folder_name}/{fun_name.replace(" ", "_").lower()}_boxplot_at_k_{k_maximo}.png'
     plt.savefig(fig_path)
 
     # Plot do gráfico final
@@ -47,17 +48,17 @@ def precision_at_k(documentos_encontrados, documentos_relevantes, k_maximo, fold
     plt.errorbar(k_valores, precisao_valores, yerr=desvio_padrao_valores, fmt='o-', ecolor='r', capsize=5)
     plt.xlabel('k')
     plt.ylabel('Precision@k (Média)')
-    plt.title('Precision@k Gráfico')
+    plt.title(f'{fun_name} - Precision@k Gráfico')
     plt.grid(True)
     plt.xticks(k_valores)
     # plt.ylim(0, 1)  # Definindo limite para o eixo y
     plt.tight_layout()
 
-    fig_path = f'{folder_name}/precision_at_k_{k_maximo}_{log_name}.png'
+    fig_path = f'{folder_name}/{fun_name.replace(" ", "_").lower()}_precision_at_k_{k_maximo}.png'
     plt.savefig(fig_path)
 
         
-def recall_at_k(documentos_encontrados, documentos_relevantes, k_maximo, folder_name, log_name):
+def recall_at_k(documentos_encontrados, documentos_relevantes, k_maximo, folder_name, fun_name):
     k_valores = range(1, k_maximo + 1)
     recall_valores = []
     desvio_padrao_valores = []
@@ -84,7 +85,7 @@ def recall_at_k(documentos_encontrados, documentos_relevantes, k_maximo, folder_
     plt.errorbar(k_valores, recall_valores, yerr=desvio_padrao_valores, fmt='o-', ecolor='r', capsize=5)
     plt.xlabel('k')
     plt.ylabel('Recall@k (Média)')
-    plt.title('Recall@k Gráfico')
+    plt.title(f'{fun_name} - Recall@k Gráfico')
     plt.grid(True)
     plt.xticks(k_valores)
     
@@ -97,7 +98,8 @@ def recall_at_k(documentos_encontrados, documentos_relevantes, k_maximo, folder_
     
     plt.tight_layout()
 
-    fig_path = f'{folder_name}/recall_at_k_{k_maximo}_{log_name}.png'
+    plt.title(f'{fun_name} - Boxplot')
+    fig_path = f'{folder_name}/{fun_name.replace(" ", "_").lower()}_recall_at_k_{k_maximo}.png'
     plt.savefig(fig_path)
     
     #plt.show()

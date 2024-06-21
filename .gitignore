@@ -2,9 +2,8 @@
 .env.local
 __pycache__
 .venv
-
-# pastas
-logs 
+logs/*
+!logs/.gitkeep
 
 # ignore
 ignorar

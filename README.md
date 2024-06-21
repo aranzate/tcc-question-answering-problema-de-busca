@@ -2,7 +2,6 @@
 1. Instale o docker-compose
 2. Instale as bibliotecas presentes no requirements.txt
 3. Crie um arquivo chamado ```.env.local``` com as informações necessárias, seguindo o exemplo de ```.env.local.example```.
-4. Crie as pastas que estão no .gitignore
 
 ## Inicialize o docker
 
@@ -18,7 +17,7 @@ Obs.: para mais informações leia [README-DOCKER](./README-DOCKER.md)
 
 ## Execute de uma vez
 
-O script ```script.sh``` executará a indexação, a busca e comparação e salvará os resultados na pasta ```/logs/<nodes>_nodes_<shards>_shards_<timestamp>```.
+O script ```script.sh``` executará a indexação, a busca e comparação e salvará os resultados na pasta ```/logs/n<nodes>_s<shards>```.
 
 ```bash
 chmod +x script.sh
@@ -75,8 +74,31 @@ Os parâmetros da execução são:
 compare.py [-h] nodes shards [folder_name]
 ```
 
-O exemplo a seguir fará comparações e gerará gráficos para os arquivos da pasta ```/logs``` de nomes: ```linear_search_nodes_1_shards_4.json```, ```linear_msearch_nodes_1_shards_4.json``` e ```parallel_nodes_1_shards_4.json```.
+O exemplo a seguir fará comparações e gerará gráficos para os arquivos da pasta ```/logs``` de nomes: ```n1_s4_log_linear_search.json```, ```n1_s4_log_linear_msearch.json``` e ```n1_s4_log_parallel_search.json```.
 ```bash
 python3 compare.py 1 4
 ```
+
+### Execute a comparação entre todos os resultados
+
+O script ```compare_results.py``` fará a comparação e geração de gráficos para todos os arquivos da pasta ```/logs``` ou da pasta informada. Para isto é necessário já ter executado a "busca". 
+
+Os parâmetros da execução são:
+<!-- - nodes (obrigatório): quantidade de nodes do arquivo de log
+- shards (obrigatório): quantidade de shards do arquivo de log -->
+- folder_name: nome da subpasta da pasta ```/logs``` onde estão os logs e será guardado o resultado.
+```bash
+compare_results.py [-h] [folder_name]
+```
+
+Por enquanto a pasta deve conter logs para todas as combinações de:
+```python
+nodes_list = [1,2,3,4]
+shards_list = [1,2,4,8,12,16,32]
+```
+
+<!-- O exemplo a seguir fará comparações e gerará gráficos para os arquivos da pasta ```/logs``` de nomes: ```n1_s4_log_linear_search.json```, ```n1_s4_log_linear_msearch.json``` e ```n1_s4_log_parallel_search.json```.
+```bash
+python3 compare.py 1 4
+``` -->
 

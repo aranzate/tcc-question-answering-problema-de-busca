@@ -30,16 +30,16 @@ def main():
     parser.add_argument('folder_name', nargs="?", default="", help='Nome da pasta')
     args = parser.parse_args()
     
-    print("Gerando gráficos de comparação...")
+    print("GRAFICOS: Gera gráficos de comparação")
 
     folder_name = args.folder_name
     if(folder_name == "") or (folder_name is None): 
         folder_name = f".{consts.SEPARATOR_PATH}{consts.LOGS_PATH}"
 
     # Ler os arquivos JSON
-    linear_search, nodes, shards, time_linear = read_json_to_df(f"{folder_name}linear_search_nodes_{args.nodes}_shards_{args.shards}.json", 'tempo_linear_search', 'time_es')
-    linear_msearch, _, _, time_msearch = read_json_to_df(f"{folder_name}linear_msearch_nodes_{args.nodes}_shards_{args.shards}.json", 'tempo_linear_msearch', 'time')
-    parallel_search, _, _, time_parallel = read_json_to_df(f"{folder_name}parallel_search_nodes_{args.nodes}_shards_{args.shards}.json", 'tempo_parallel_search', 'time')
+    linear_search, nodes, shards, time_linear = read_json_to_df(f"{folder_name}n{args.nodes}_s{args.shards}_log_linear_search.json", 'tempo_linear_search', 'time')
+    linear_msearch, _, _, time_msearch = read_json_to_df(f"{folder_name}n{args.nodes}_s{args.shards}_log_linear_msearch.json", 'tempo_linear_msearch', 'time')
+    parallel_search, _, _, time_parallel = read_json_to_df(f"{folder_name}n{args.nodes}_s{args.shards}_log_parallel_search.json", 'tempo_parallel_search', 'time')
 
     # Mesclar os DataFrames com base na coluna 'id'
     df = linear_search.merge(linear_msearch, on='id').merge(parallel_search, on='id')
@@ -53,7 +53,7 @@ def main():
 
     # Definir os limites dos eixos x e y
     x_limits = (df['id'].min(), df['id'].max())
-    y_limits = (0,.05) #(min(df['tempo_linear_search'].min(), df['tempo_linear_msearch'].min()), max(df['tempo_linear_search'].max(), df['tempo_linear_msearch'].max()))
+    y_limits = (0,.15) #(min(df['tempo_linear_search'].min(), df['tempo_linear_msearch'].min()), max(df['tempo_linear_search'].max(), df['tempo_linear_msearch'].max()))
 
     # Função para criar e salvar cada subplot
     def create_subplot(ax, data, label, color, title, time):
@@ -89,24 +89,24 @@ def main():
     axs[3].legend(loc='upper center', bbox_to_anchor=(0.5, -0.15), ncol=3)
 
     # Subplot 5: Combinação linear_search x linear_msearch
-    create_subplot(axs[4], df['linear_minus_msearch'], 'Linear Search - Linear Msearch', 'purple', 'Linear Search - Linear Msearch', None)
+    create_subplot(axs[4], df['linear_minus_msearch'], 'Linear Search minus Linear Msearch', 'purple', 'Linear Search minus Linear Msearch', None)
 
     # Subplot 6: Combinação linear_search x parallel_search
-    create_subplot(axs[5], df['linear_minus_parallel'], 'Linear Search - Parallel Search', 'teal', 'Linear Search - Parallel Search', None)
+    create_subplot(axs[5], df['linear_minus_parallel'], 'Linear Search minus Parallel Search', 'teal', 'Linear Search minus Parallel Search', None)
 
     # Salvar a figura com todos os subplots
-    fig_all_path = f'{folder_name}/grafico_nodes_{nodes}_shards_{shards}.png'
+    fig_all_path = f'{folder_name}/n{nodes}_s{shards}_-_graficos.png'
     plt.savefig(fig_all_path)
     # plt.show()
 
     # Salvar cada subplot individualmente
     subplot_titles = [
-        ('Linear Search', 'tempo_linear_search', 'blue', time_linear),
-        ('Linear MSearch', 'tempo_linear_msearch', 'red', time_msearch),
-        ('Parallel Search', 'tempo_parallel_search', 'green', time_parallel),
-        ('Comparação dos Tempos de Resposta das Consultas', None, None, None),
-        ('Linear Search - Linear Msearch', 'linear_minus_msearch', 'purple', None),
-        ('Linear Search - Parallel Search', 'linear_minus_parallel', 'teal', None)
+        (f"n{nodes} s{shards} - Linear Search", 'tempo_linear_search', 'blue', time_linear),
+        (f"n{nodes} s{shards} - Linear MSearch", 'tempo_linear_msearch', 'red', time_msearch),
+        (f"n{nodes} s{shards} - Parallel Search", 'tempo_parallel_search', 'green', time_parallel),
+        (f"n{nodes} s{shards} - Comparação dos Tempos de Resposta das Consultas", None, None, None),
+        (f"n{nodes} s{shards} - Linear Search minus Linear Msearch", 'linear_minus_msearch', 'purple', None),
+        (f"n{nodes} s{shards} - Linear Search minus Parallel Search", 'linear_minus_parallel', 'teal', None)
     ]
 
     for i, (title, column, color, time) in enumerate(subplot_titles):
@@ -126,21 +126,21 @@ def main():
             ax.legend(loc='upper center', bbox_to_anchor=(0.5, -0.05), ncol=3)
         
         # Caminho completo do arquivo
-        fig_path = f'{folder_name}/grafico_{title.replace(" ", "_").lower()}_nodes_{nodes}_shards_{shards}.png'
+        fig_path = f'{folder_name}/{title.replace(" ", "_").lower()}.png'
         plt.savefig(fig_path)
         plt.close(fig)
 
 
     # Precision e recall
-    print("Gerando gráficos de precision e recall...")
+    print("GRAFICOS: Gera gráficos de precision e recall")
     
     with open(consts.RESULT_ANSWERS_PATH, 'r') as answers_file:
         answers = json.load(answers_file)
 
-    with open(f"{folder_name}linear_search_nodes_{nodes}_shards_{shards}.json", 'r') as found_file:
+    with open(f"{folder_name}n{nodes}_s{shards}_log_linear_search.json", 'r') as found_file:
         log = json.load(found_file)
-    metrics.precision_at_k(log, answers, 10, folder_name, f"linear_search_nodes_{nodes}_shards_{shards}")
-    metrics.recall_at_k(log, answers, 10, folder_name, f"linear_search_nodes_{nodes}_shards_{shards}")
+    metrics.precision_at_k(log, answers, 10, folder_name, f"n{nodes} s{shards} - Linear Search")
+    metrics.recall_at_k(log, answers, 10, folder_name, f"n{nodes} s{shards} - Linear Search")
 
 if __name__ == '__main__':
     main()

@@ -22,7 +22,7 @@ class Index:
             action_time, result = calculate_execution_time(self.es.insert_document, doc_id, self.index, body, doc_id)
             actions_time.append(action_time)
         end = time.time()
-        write_log(self.index_documents.__name__, file_path, self.es.insert_document.__name__, actions_time, timestamp, shards=shards, nodes=nodes, time_python_function=end-start, folder_name=folder_name)
+        write_log(self.index_documents.__name__, file_path, self.es.insert_document.__name__, actions_time, timestamp, shards=shards, nodes=nodes, time_python_function=end-start, folder_name=folder_name, mean=False, variance=False, standard_deviation=False)
 
         
     # Adiciona os documentos de uma vez, ao elastic_search
@@ -35,5 +35,5 @@ class Index:
         action_time, result = calculate_execution_time(self.es.insert_documents, None, self.index, data)
         actions = [action_time]
         end = time.time()
-        write_log(self.index_documents_bulk.__name__, file_path, self.es.insert_documents.__name__, actions, timestamp, shards=shards, nodes=nodes, time_python_function=end-start, folder_name=folder_name)
+        write_log(self.index_documents_bulk.__name__, file_path, self.es.insert_documents.__name__, actions, timestamp, shards=shards, nodes=nodes, time_python_function=end-start, folder_name=folder_name, mean=False, variance=False, standard_deviation=False)
         

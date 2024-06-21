@@ -15,7 +15,7 @@ com os métodos que interagem com o servidor do ElasticSearch
 class Search:
 
     # Inicializa o cliente do ElasticSearch
-    def __init__(self, no_message=False):
+    def __init__(self, message=False):
         ELASTICSEARCH_HOST = os.getenv("ELASTICSEARCH_HOST")
         ELASTICSEARCH_PORT = os.getenv("ELASTICSEARCH_PORT")
         ELASTICSEARCH_USERNAME = os.getenv("ELASTICSEARCH_USERNAME")
@@ -30,7 +30,7 @@ class Search:
             verify_certs=False
         )
 
-        if(no_message == False):
+        if(message):
             print('Connected to Elasticsearch!')
             
         # client_info = self.es.info()
