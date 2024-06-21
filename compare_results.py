@@ -50,7 +50,7 @@ def get_filled_attributes(attributes, nodes_list, shards_list, folder_name):
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Executa uma função específica com base no parâmetro passado.')
+    parser = argparse.ArgumentParser(description='Cria gráficos de comparação entre os logs da pasta.')
     parser.add_argument('folder_name', nargs="?", default="", help='Nome da pasta')
     args = parser.parse_args()
 
@@ -70,7 +70,7 @@ def main():
     attributes = get_filled_attributes(empty_attributes, nodes_list, shards_list, folder_name)
 
     print("GRAFICOS: Gera gráficos de comparação com todos os logs")
-    
+
     for attribute in attributes:
         columns_title = ['L. Search', 'L. Msearch', 'Parallel Search']
         rows_title = ['n' + str(nodes) for nodes in nodes_list] # ['n1', 'n2', 'n3', 'n4']
