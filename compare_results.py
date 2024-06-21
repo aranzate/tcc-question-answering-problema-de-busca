@@ -1,10 +1,7 @@
-import pandas as pd
 import json
 import argparse
 import consts
 import matplotlib.pyplot as plt
-import numpy as np
-from pprint import pprint
 
 def read_json(filepath):
     with open(filepath, 'r') as file:
@@ -60,7 +57,7 @@ def params():
             "param": "standard_deviation",
             "title": "Desvio Padrão do Tempo de Busca por Query X Quantidade de Shards",
             "min": 0,
-            "max": 0.02,
+            "max": 0.024,
             "total": [],
             "ls": [],
             "lm": [],
@@ -72,9 +69,7 @@ def params():
 
 def get_data(nodes_list, shards_list, folder_name):
 
-    attributes = params()        
-    # time_python_function_total = []
-    # mean_total = []
+    attributes = params()     
 
     for nodes in nodes_list:
 
@@ -82,48 +77,25 @@ def get_data(nodes_list, shards_list, folder_name):
             attribute["ls"] = []
             attribute["lm"] = []
             attribute["ps"] = []
-        # time_python_function_ls = []
-        # time_python_function_lm = []
-        # time_python_function_ps = []
-
-        # mean_ls = []
-        # mean_lm = []
-        # mean_ps = []
 
         for shards in shards_list:
 
             json_data = read_json2(f"{folder_name}n{nodes}_s{shards}_log_linear_search.json")
             for attribute in attributes:
                 attribute["ls"].append(json_data[attribute["param"]])
-            # time_python_function_ls.append(time_python_function)
-            # mean_ls.append(mean)
 
             json_data = read_json2(f"{folder_name}n{nodes}_s{shards}_log_linear_msearch.json") 
             for attribute in attributes:
                 attribute["lm"].append(json_data[attribute["param"]])
-            # time_python_function, mean, _, _ = read_json(f"{folder_name}n{nodes}_s{shards}_log_linear_msearch.json") 
-            # time_python_function_lm.append(time_python_function)
-            # mean_lm.append(mean)
 
             json_data = read_json2(f"{folder_name}n{nodes}_s{shards}_log_parallel_search.json")
             for attribute in attributes:
                 attribute["ps"].append(json_data[attribute["param"]])
-            # time_python_function, mean, _, _ = read_json(f"{folder_name}n{nodes}_s{shards}_log_parallel_search.json")
-            # time_python_function_ps.append(time_python_function)
-            # mean_ps.append(mean)
 
         for attribute in attributes:
             attribute["total"].append(attribute["ls"])
             attribute["total"].append(attribute["lm"])
             attribute["total"].append(attribute["ps"])
-
-        # time_python_function_total.append(time_python_function_ls)
-        # time_python_function_total.append(time_python_function_lm)
-        # time_python_function_total.append(time_python_function_ps)
-
-        # mean_total.append(mean_ls)
-        # mean_total.append(mean_lm)
-        # mean_total.append(mean_ps)
 
     return attributes
 
@@ -143,38 +115,12 @@ def main():
     shards_list = [1,2,4,8,12,16,32]
 
     attributes = get_data(nodes_list, shards_list, folder_name)
-
-    # time_python_function_total = []
-
-    # for nodes in nodes_list:
-    #     time_python_function_ls = []
-    #     time_python_function_lm = []
-    #     time_python_function_ps = []
-
-    #     for shards in shards_list:
-
-    #         time_python_function, _, _, _ = read_json(f"{folder_name}n{nodes}_s{shards}_log_linear_search.json")
-    #         time_python_function_ls.append(time_python_function)
-
-    #         time_python_function, _, _, _ = read_json(f"{folder_name}n{nodes}_s{shards}_log_linear_msearch.json") 
-    #         time_python_function_lm.append(time_python_function)
-
-    #         time_python_function, _, _, _ = read_json(f"{folder_name}n{nodes}_s{shards}_log_parallel_search.json")
-    #         time_python_function_ps.append(time_python_function)
-
-    #     time_python_function_total.append(time_python_function_ls)
-    #     time_python_function_total.append(time_python_function_lm)
-    #     time_python_function_total.append(time_python_function_ps)
-
-    # pprint(time_python_function_total)
-
     
     for attribute in attributes:
-        # Dados
         min = attribute["min"]
         max = attribute["max"]
-        y = attribute["total"] # time_python_function_total # np.random.rand(12, 7) * 10  # Exemplos de valores de tempo em segundos para cada gráfico
-        title = attribute["title"] # 'Tempo Python(s) X Quantidade de Shards'
+        y = attribute["total"] 
+        title = attribute["title"] 
         
         columns_title = ['L. Search', 'L. Msearch', 'Parallel Search']
         x = shards_list
@@ -195,7 +141,6 @@ def main():
                 ax.set_xlabel('Shards')
                 ax.set_ylabel('Tempo (s)')
                 ax.set_ylim(min, max)
-                #ax.set_title(f'Gráfico {i*4 + j + 1}')
                 ax.set_title(f'')
                 ax.set_xticks(x)
                 ax.grid(True)
@@ -206,9 +151,6 @@ def main():
 
         for ax, row in zip(axes[:,0], linhas_titulo):
             ax.set_ylabel(row, rotation=0, fontsize=14, labelpad=40)
-
-        # plt.tight_layout(rect=[0, 0.03, 1, 0.95])
-        # plt.show()
 
         # Caminho completo do arquivo
         fig_path = f'{folder_name}/results_{title.replace(" ", "_").lower()}.png'
