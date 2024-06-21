@@ -19,18 +19,36 @@ def read_json(filepath):
 
 
 def params():
-    params = ["time_python_function", "mean", "variance", "standard_deviation"]
-    titles = ["Tempo Python(s) X Quantidade de Shards", "Média do tempo de busca por query X Quantidade de Shards", "Variância do tempo de busca por query X Quantidade de Shards", "Desvio padrão do tempo de busca por query X Quantidade de Shards"]
-    result = []
-
-    for i in range (len(params)):
-        result.append(
-            {
-                "param": params[i],
-                "title": titles[i],
-                "total": []
-            }
-        )
+    result = [
+        {
+            "param": "time_python_function",
+            "title": "Tempo Python(s) X Quantidade de Shards",
+            "min": 0,
+            "max": 210,
+            "total": []
+        },
+        {
+            "param": "mean",
+            "title": "Média do tempo de busca por query X Quantidade de Shards",
+            "min": 0,
+            "max": 2,
+            "total": []
+        },
+        {
+            "param": "variance",
+            "title": "Variância do tempo de busca por query X Quantidade de Shards",
+            "min": 0,
+            "max": 5,
+            "total": []
+        },
+        {
+            "param": "standard_deviation",
+            "title": "Desvio padrão do tempo de busca por query X Quantidade de Shards",
+            "min": 0,
+            "max": 5,
+            "total": []
+        },
+    ]
 
     return result
 
@@ -74,38 +92,37 @@ def main():
     pprint(time_python_function_total)
 
         
-            
-        
-
     # Dados
+    min = 0
+    max = 210
     x = shards_list
     y = time_python_function_total # np.random.rand(12, 7) * 10  # Exemplos de valores de tempo em segundos para cada gráfico
     title = 'Tempo Python(s) X Quantidade de Shards'
+    columns_title = ['L. Search', 'L. Msearch', 'Parallel Search']
 
     # Configurações da grade de gráficos
-    fig, axes = plt.subplots(4, 3, figsize=(15, 20))
+    fig, axes = plt.subplots(len(nodes_list), len(columns_title), figsize=(15, 20))
     fig.suptitle(title, fontsize=16)
 
     # Títulos das linhas e colunas
-    linhas_titulo = ['n1', 'n2', 'n3', 'n4']
-    colunas_titulo = ['L. Search', 'L. Msearch', 'Parallel Search']
+    linhas_titulo = ['n' + str(nodes) for nodes in nodes_list] # ['n1', 'n2', 'n3', 'n4']
 
     # Gerar gráficos
-    for i in range(4):
-        for j in range(3):
+    for i in range(len(nodes_list)):
+        for j in range(len(columns_title)):
             ax = axes[i, j]
-            y_values = y[i*3 + j]
+            y_values = y[i*len(columns_title) + j]
             ax.plot(x, y_values, marker='o', linestyle='-', color='b')
             ax.set_xlabel('Shards')
             ax.set_ylabel('Tempo (s)')
-            ax.set_ylim(0, 210)
+            ax.set_ylim(min, max)
             #ax.set_title(f'Gráfico {i*4 + j + 1}')
             ax.set_title(f'')
             ax.set_xticks(x)
             ax.grid(True)
 
     # Adicionar títulos às linhas e colunas
-    for ax, col in zip(axes[0], colunas_titulo):
+    for ax, col in zip(axes[0], columns_title):
         ax.set_title(col, fontsize=14, pad=20)
 
     for ax, row in zip(axes[:,0], linhas_titulo):
