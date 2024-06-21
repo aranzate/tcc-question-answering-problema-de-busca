@@ -79,3 +79,20 @@ O exemplo a seguir fará comparações e gerará gráficos para os arquivos da p
 python3 compare.py 1 4
 ```
 
+### Execute a comparação entre todos os resultados
+
+O script ```compare_results.py``` fará a comparação e geração de gráficos para todos os arquivos da pasta ```/logs``` ou da pasta informada. Para isto é necessário já ter executado a "busca". 
+
+Os parâmetros da execução são:
+<!-- - nodes (obrigatório): quantidade de nodes do arquivo de log
+- shards (obrigatório): quantidade de shards do arquivo de log -->
+- folder_name: nome da subpasta da pasta ```/logs``` onde estão os logs e será guardado o resultado.
+```bash
+compare_results.py [-h] [folder_name]
+```
+
+<!-- O exemplo a seguir fará comparações e gerará gráficos para os arquivos da pasta ```/logs``` de nomes: ```n1_s4_log_linear_search.json```, ```n1_s4_log_linear_msearch.json``` e ```n1_s4_log_parallel_search.json```.
+```bash
+python3 compare.py 1 4
+``` -->
+
