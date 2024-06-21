@@ -91,6 +91,12 @@ Os parâmetros da execução são:
 compare_results.py [-h] [folder_name]
 ```
 
+Por enquanto a pasta deve conter logs para todas as combinações de:
+```python
+nodes_list = [1,2,3,4]
+shards_list = [1,2,4,8,12,16,32]
+```
+
 <!-- O exemplo a seguir fará comparações e gerará gráficos para os arquivos da pasta ```/logs``` de nomes: ```n1_s4_log_linear_search.json```, ```n1_s4_log_linear_msearch.json``` e ```n1_s4_log_parallel_search.json```.
 ```bash
 python3 compare.py 1 4
