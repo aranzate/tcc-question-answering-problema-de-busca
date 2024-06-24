@@ -1,3 +1,5 @@
+# Extrai contextos
+
 import json
 
 # Load JSON data from a file
