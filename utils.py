@@ -24,7 +24,7 @@ def linear_search(es, queries, quantity, shards, nodes, folder_name):
             }
         }
         
-        action_time, results = calculate_execution_time(es.search, id, index="contextos", body=query_busca)
+        action_time, results = calculate_execution_time(es.search, id, index=consts.INDEX, body=query_busca)
         action_time["hits"] = [hit['_id'] for hit in results['hits']['hits']]
         actions.append(action_time)
 
@@ -58,12 +58,12 @@ def linear_msearch(es, queries, quantity, shards, nodes, folder_name):
             }
         }
 
-        msearch_body.append({"index": "contextos"})
+        msearch_body.append({"index": consts.INDEX})
         msearch_body.append(query_busca)
         ids.append(id)
 
 
-        results = es.msearch(index="contextos", body=msearch_body)
+        results = es.msearch(index=consts.INDEX, body=msearch_body)
 
         execution_times = msearch_execution_time(results, ids)
 
@@ -98,12 +98,12 @@ def parallel_search(es, queries, quantity, shards, nodes, folder_name):
             }
         }
 
-        msearch_body.append({"index": "contextos"})
+        msearch_body.append({"index": consts.INDEX})
         msearch_body.append(query_busca)
         ids.append(id)
 
     start_time = time.time()
-    results = es.msearch(index="contextos", body=msearch_body)
+    results = es.msearch(index=consts.INDEX, body=msearch_body)
     end_time = time.time()
     execution_times = msearch_execution_time(results, ids)
 
