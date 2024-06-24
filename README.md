@@ -84,21 +84,16 @@ python3 compare.py 1 4
 O script ```compare_results.py``` fará a comparação e geração de gráficos para todos os arquivos da pasta ```/logs``` ou da pasta informada. Para isto é necessário já ter executado a "busca". 
 
 Os parâmetros da execução são:
-<!-- - nodes (obrigatório): quantidade de nodes do arquivo de log
-- shards (obrigatório): quantidade de shards do arquivo de log -->
-- folder_name: nome da subpasta da pasta ```/logs``` onde estão os logs e será guardado o resultado.
+- folder_name: nome da pasta onde estão os logs e será guardado o resultado. (Se não for fornecido, será a pasta ```/logs```)
+- nodes_list: lista de nós dos logs das pasta. (Se não for fornecido, será [1,2,3,4])
+- shards_list: lista de shards dos logs da pasta. (Se não for fornecido, será [1,2,4,8,12,16,32])
 ```bash
-compare_results.py [-h] [folder_name]
+compare_results.py [-h] [--nodes_list [NODES_LIST ...]] [--shards_list [SHARDS_LIST ...]] [folder_name]
 ```
+Obs.: A pasta deve conter logs para todas as combinações de nodes_list e shards_list fornecidos.
 
-Por enquanto a pasta deve conter logs para todas as combinações de:
-```python
-nodes_list = [1,2,3,4]
-shards_list = [1,2,4,8,12,16,32]
-```
-
-<!-- O exemplo a seguir fará comparações e gerará gráficos para os arquivos da pasta ```/logs``` de nomes: ```n1_s4_log_linear_search.json```, ```n1_s4_log_linear_msearch.json``` e ```n1_s4_log_parallel_search.json```.
+O exemplo a seguir fará comparações e gerará gráficos para os arquivos de logs da pasta ```./logs/contextos_0621/```: 
 ```bash
-python3 compare.py 1 4
-``` -->
+python compare_results.py ./logs/contextos_0621/ --nodes_list 1 2 3 4 --shards_list 1 2 4 8 12 16 32
+```
 
