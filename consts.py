@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 load_dotenv('.env.local')
 
-INDEX = "contextos"
+INDEX = os.getenv("INDEX")
 ARRAY_NAME = 'contexts'
 SEARCHED_DOCUMENTS_QUANTITY = 10
 
