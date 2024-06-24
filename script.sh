@@ -9,8 +9,13 @@ nodes=$(python3 get_nodes.py)
 shards_list=$SHARDS_LIST
 
 # Nome da pasta com timestamp 
-timestamp=$(date +"%Y-%m-%d_%H-%M-%S") 
-folder_name=".${SEPARATOR_PATH}${LOGS_PATH}${INDEX}_${timestamp}"
+# timestamp=$(date +"%Y-%m-%d_%H-%M-%S") 
+# folder_name=".${SEPARATOR_PATH}${LOGS_PATH}${INDEX}_${timestamp}"
+# mkdir "$folder_name"
+# folder_name="${folder_name}${SEPARATOR_PATH}"
+
+# Nome da pasta sem timestamp 
+folder_name=".${SEPARATOR_PATH}${LOGS_PATH}${INDEX}"
 mkdir "$folder_name"
 folder_name="${folder_name}${SEPARATOR_PATH}"
 
