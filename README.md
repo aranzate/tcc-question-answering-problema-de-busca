@@ -17,7 +17,7 @@ Obs.: para mais informações leia [README-DOCKER](./README-DOCKER.md)
 
 ## Execute de uma vez
 
-O script ```script.sh``` executará a indexação, a busca e comparação e salvará os resultados na pasta ```/logs/n<nodes>_s<shards>```.
+O script ```script.sh``` executará a indexação, a busca e comparação e salvará os resultados na pasta ```/logs```.
 
 ```bash
 chmod +x script.sh
