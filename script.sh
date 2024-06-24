@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Realiza a indexação, busca e comparações e armazena tudo na pasta logs. 
+# Usará a quantidade de nodes da instância do docker ativa atualmente.
+
 source .env.local
 
 nodes=$(python3 get_nodes.py)
