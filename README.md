@@ -5,7 +5,7 @@
 
 ## Inicialize o docker
 
-1. Entre em uma das pastas com nome "Dockercompose"
+1. Entre em uma das pastas com nome "Dockercompose_n```<nós>```"
 2. Inicialize a instância com o comando:
 ```bash
 sudo docker-compose up -d # inicializa os nós e o kibana
@@ -81,7 +81,7 @@ Os parâmetros da execução são:
 compare.py [-h] nodes shards [folder_name]
 ```
 
-O exemplo a seguir fará comparações e gerará gráficos para os arquivos da pasta ```/logs``` de nomes: ```n1_s4_log_linear_search.json```, ```n1_s4_log_linear_msearch.json``` e ```n1_s4_log_parallel_search.json```.
+O exemplo a seguir fará comparações e gerará gráficos para os arquivos da pasta ```./logs/``` de nomes: ```n1_s4_log_linear_search.json```, ```n1_s4_log_linear_msearch.json``` e ```n1_s4_log_parallel_search.json```.
 ```bash
 python3 compare.py 1 4
 ```
