@@ -12,7 +12,7 @@ shards_list=$SHARDS_LIST
 timestamp=$(date +"%Y-%m-%d_%H-%M-%S") 
 folder_name=".${SEPARATOR_PATH}${LOGS_PATH}${INDEX}_${timestamp}"
 mkdir "$folder_name"
-folder_name="${folder_name}/"
+folder_name="${folder_name}${SEPARATOR_PATH}"
 
 # Sem pasta
 # folder_name=""
