@@ -43,6 +43,15 @@ for entry in data["data"]:
         
         context_id += 1
 
+# Extrair respostas
+question_answers = {}
+for question in questions_with_contexts:
+    question_id = str(question['id_question'])
+    context_id = str(question['id_context'])
+    if question_id not in question_answers:
+        question_answers[question_id] = []
+    question_answers[question_id].append(context_id)
+
 # Criar novas estruturas JSON para contextos e perguntas
 contexts_with_titles_json = {"contexts": contexts_with_titles}
 questions_with_contexts_json = {"questions": questions_with_contexts}
@@ -53,3 +62,6 @@ with open(f'{SQUAD_PATH}{JSON_DATA_NAME}-contexts.json', 'w') as output_file:
 
 with open(f'{SQUAD_PATH}{JSON_DATA_NAME}-questions.json', 'w') as output_file:
     json.dump(questions_with_contexts_json, output_file, indent=2)
+
+with open(f'{SQUAD_PATH}{JSON_DATA_NAME}-answers.json', 'w') as output_file:
+    json.dump(question_answers, output_file, indent=4)
