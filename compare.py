@@ -76,7 +76,8 @@ def main():
         if(standard_deviation is not None):
              text += f'Desvio Padrão: {standard_deviation}s'
         if(text != ""):
-            ax.text(0.88, 0.95, text, transform=ax.transAxes, fontsize=10, verticalalignment='top', bbox=dict(facecolor='white', alpha=0.5))
+            #ax.text(0.70, 1.143,  text, transform=ax.transAxes, fontsize=10, verticalalignment='top', bbox=dict(facecolor='white', alpha=0.5))
+            ax.text(0.69, 1.13, text, transform=ax.transAxes, fontsize=10, verticalalignment='top',bbox=dict(facecolor='white', edgecolor='black', boxstyle='round,pad=0.5'))
         
         ax.set_xlim(x_limits)
         ax.set_ylim(y_limits)
@@ -115,18 +116,18 @@ def main():
 
     # Salvar cada subplot individualmente
     subplot_titles = [
-        (f"n{nodes} s{shards} - Linear Search", 'tempo_linear_search', 'blue', time_linear),
-        (f"n{nodes} s{shards} - Linear MSearch", 'tempo_linear_msearch', 'red', time_msearch),
-        (f"n{nodes} s{shards} - Parallel Search", 'tempo_parallel_search', 'green', time_parallel),
-        (f"n{nodes} s{shards} - Comparação dos Tempos de Resposta das Consultas", None, None, None),
-        (f"n{nodes} s{shards} - Linear Search minus Linear Msearch", 'linear_minus_msearch', 'purple', None),
-        (f"n{nodes} s{shards} - Linear Search minus Parallel Search", 'linear_minus_parallel', 'teal', None)
+        (f"n{nodes} s{shards} - Linear Search", 'tempo_linear_search', 'blue', time_linear, mean_linear, variance_linear, standard_deviation_linear),
+        (f"n{nodes} s{shards} - Linear MSearch", 'tempo_linear_msearch', 'red', time_msearch, mean_msearch, variance_msearch, standard_deviation_msearch),
+        (f"n{nodes} s{shards} - Parallel Search", 'tempo_parallel_search', 'green', time_parallel, mean_parallel, variance_parallel, standard_deviation_parallel),
+        (f"n{nodes} s{shards} - Comparação dos Tempos de Resposta das Consultas", None, None, None, None, None, None),
+        (f"n{nodes} s{shards} - Linear Search minus Linear Msearch", 'linear_minus_msearch', 'purple', None, None, None, None),
+        (f"n{nodes} s{shards} - Linear Search minus Parallel Search", 'linear_minus_parallel', 'teal', None, None, None, None)
     ]
 
-    for i, (title, column, color, time) in enumerate(subplot_titles):
+    for i, (title, column, color, time, mean, variance, standard_deviation) in enumerate(subplot_titles):
         fig, ax = plt.subplots(figsize=(10, 4))
         if column:
-            create_subplot(ax, df[column], title, color, title, time)
+            create_subplot(ax, df[column], title, color, title, time, mean, variance, standard_deviation)
         else:
             ax.plot(df['id'], df['tempo_linear_search'], label='Linear Search', color='blue')
             ax.plot(df['id'], df['tempo_linear_msearch'], label='Linear MSearch', color='red')
