@@ -52,14 +52,17 @@ def get_filled_attributes(attributes, nodes_list, shards_list, folder_name):
 def main():
     parser = argparse.ArgumentParser(description='Cria gráficos de comparação entre os logs da pasta.')
     parser.add_argument('folder_name', nargs="?", default="", help='Nome da pasta')
+    parser.add_argument('--nodes_list', type=int, nargs='*', default=[1, 2, 3, 4], help='Lista de nós')
+    parser.add_argument('--shards_list', type=int, nargs='*', default=[1, 2, 4, 8, 12, 16, 32], help='Lista de shards')
+    args = parser.parse_args()
     args = parser.parse_args()
 
     folder_name = args.folder_name
     if(folder_name == "") or (folder_name is None): 
         folder_name = f".{consts.SEPARATOR_PATH}{consts.LOGS_PATH}"
 
-    nodes_list = [1,2,3,4]
-    shards_list = [1,2,4,8,12,16,32]
+    nodes_list = args.nodes_list
+    shards_list = args.shards_list
     empty_attributes = [
         create_empty_attribute("time_python_function", "Tempo de Execução da Função(s) X Quantidade de Shards", 0, 210),
         create_empty_attribute("mean", "Média do Tempo de Busca por Query X Quantidade de Shards", 0, 0.08),

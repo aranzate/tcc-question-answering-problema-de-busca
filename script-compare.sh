@@ -4,9 +4,7 @@
 
 source .env.local
 
-folder_name=".${SEPARATOR_PATH}${LOGS_PATH}${FOLDER_PATH}"
-mkdir "$folder_name"
-folder_name="${folder_name}${SEPARATOR_PATH}"
+folder_name=".${SEPARATOR_PATH}${LOGS_PATH}${FOLDER_PATH}${SEPARATOR_PATH}"
 
 for nodes in "${NODES_LIST[@]}"; do
     for shards in "${SHARDS_LIST[@]}"; do
@@ -14,4 +12,4 @@ for nodes in "${NODES_LIST[@]}"; do
     done
 done
 
-
+python compare_results.py $folder_name --nodes_list "${NODES_LIST[@]}" --shards_list "${SHARDS_LIST[@]}"
