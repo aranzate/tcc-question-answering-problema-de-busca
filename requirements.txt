@@ -3,3 +3,4 @@ pip install elasticsearch
 pip install -U matplotlib
 pip install pandas
 pip install PyQt5
+pip install pandas odfpy

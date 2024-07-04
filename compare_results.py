@@ -2,6 +2,7 @@ import json
 import argparse
 import consts
 import matplotlib.pyplot as plt
+import pandas as pd
 
 def read_json(filepath):
     with open(filepath, 'r') as file:
@@ -84,10 +85,13 @@ def main():
         title = attribute["title"] 
         
         fig, axes = plt.subplots(len(nodes_list), len(columns_title), figsize=(15, 20))
-        fig.suptitle(title, fontsize=16)        
+        fig.suptitle(title, fontsize=16)      
+
+        data = []  
 
         for i in range(len(nodes_list)):
             for j in range(len(columns_title)):
+                # informações do gráfico
                 ax = axes[i, j]
                 y_values = y[i*len(columns_title) + j]
                 ax.plot(x, y_values, marker='o', linestyle='-', color='b')
@@ -97,6 +101,15 @@ def main():
                 ax.set_title(f'')
                 ax.set_xticks(x)
                 ax.grid(True)
+
+                # Coleta informações para adicionar a tabela
+                for k in range(len(y_values)):
+                    data.append([nodes_list[i], columns_title[j], x[k], y_values[k]])
+
+        # Salvar informações em uma tabela
+        df = pd.DataFrame(data, columns=["Nós", "Busca", "Shards", "Tempo"])
+        odf_path = f'{folder_name}/table_{title.replace(" ", "_").lower()}.ods'
+        df.to_excel(odf_path, engine='odf')
 
         # Adicionar títulos às linhas e colunas
         for ax, col in zip(axes[0], columns_title):
