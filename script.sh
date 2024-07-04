@@ -14,6 +14,11 @@ folder_name=".${SEPARATOR_PATH}${LOGS_PATH}${INDEX}_${timestamp}"
 mkdir "$folder_name"
 folder_name="${folder_name}${SEPARATOR_PATH}"
 
+# Nome da pasta sem timestamp 
+# folder_name=".${SEPARATOR_PATH}${LOGS_PATH}${INDEX}"
+# mkdir "$folder_name"
+# folder_name="${folder_name}${SEPARATOR_PATH}"
+
 # Sem pasta
 # folder_name=""
 
