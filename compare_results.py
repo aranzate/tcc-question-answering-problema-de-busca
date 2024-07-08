@@ -66,7 +66,8 @@ def main():
     shards_list = args.shards_list
     empty_attributes = [
         create_empty_attribute("time_python_function", "Tempo de Execução da Função(s) X Quantidade de Shards", 0, 210),
-        create_empty_attribute("mean", "Média do Tempo de Busca por Query X Quantidade de Shards", 0, 0.08),
+        # create_empty_attribute("mean", "Média do Tempo de Busca por Query X Quantidade de Shards", 0, 0.08),
+        create_empty_attribute("mean", "Média do Tempo de Busca por Query X Quantidade de Shards", -0.012, 0.105),
         create_empty_attribute("variance", "Variância do Tempo de Busca por Query X Quantidade de Shards", 0, 0.0006),
         create_empty_attribute("standard_deviation", "Desvio Padrão do Tempo de Busca por Query X Quantidade de Shards", 0, 0.024)
     ]
@@ -92,8 +93,9 @@ def main():
         for i in range(len(nodes_list)):
             for j in range(len(columns_title)):
                 # informações do gráfico
+                position = i*len(columns_title) + j
                 ax = axes[i, j]
-                y_values = y[i*len(columns_title) + j]
+                y_values = y[position]
                 ax.plot(x, y_values, marker='o', linestyle='-', color='b')
                 ax.set_xlabel('Shards')
                 ax.set_ylabel('Tempo (s)')
@@ -101,6 +103,10 @@ def main():
                 ax.set_title(f'')
                 ax.set_xticks(x)
                 ax.grid(True)
+
+                # poc para adicionar desvião padrão no gráfico de médias
+                if(attribute["param"] == "mean"):
+                    ax.errorbar(x, y_values, yerr=attributes[3]["total"][position], marker='o', linestyle='-', color='b', ecolor='r', capsize=5, label='Média com Variância')
 
                 # Coleta informações para adicionar a tabela
                 for k in range(len(y_values)):
