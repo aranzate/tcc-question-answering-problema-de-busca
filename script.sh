@@ -9,10 +9,10 @@ nodes=$(python3 get_nodes.py)
 shards_list=$SHARDS_LIST
 
 # Nome da pasta com timestamp 
-timestamp=$(date +"%Y-%m-%d_%H-%M-%S") 
-folder_name=".${SEPARATOR_PATH}${LOGS_PATH}${INDEX}_${timestamp}"
-mkdir "$folder_name"
-folder_name="${folder_name}${SEPARATOR_PATH}"
+# timestamp=$(date +"%Y-%m-%d_%H-%M-%S") 
+# folder_name=".${SEPARATOR_PATH}${LOGS_PATH}${INDEX}_${timestamp}"
+# mkdir "$folder_name"
+# folder_name="${folder_name}${SEPARATOR_PATH}"
 
 # Nome da pasta sem timestamp 
 # folder_name=".${SEPARATOR_PATH}${LOGS_PATH}${INDEX}"
@@ -21,6 +21,9 @@ folder_name="${folder_name}${SEPARATOR_PATH}"
 
 # Sem pasta
 # folder_name=""
+
+# Nome da pasta vem de .env.local
+folder_name=".${SEPARATOR_PATH}${LOGS_PATH}${FOLDER_PATH}${SEPARATOR_PATH}"
 
 for shards in "${shards_list[@]}"; do
     python3 indexing.py ib $shards $folder_name
