@@ -6,7 +6,7 @@
 source .env.local
 
 nodes=$(python3 get_nodes.py)
-shards_list=$SHARDS_LIST
+shards_list=($SHARDS_LIST)
 
 # Nome da pasta com timestamp 
 # timestamp=$(date +"%Y-%m-%d_%H-%M-%S") 
