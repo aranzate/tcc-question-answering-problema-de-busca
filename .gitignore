@@ -4,6 +4,7 @@ __pycache__
 .venv
 logs/*
 !logs/.gitkeep
+!logs/contextos-0621
 
 # ignore
 ignorar

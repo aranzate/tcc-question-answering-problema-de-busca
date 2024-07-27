@@ -1,0 +1,15 @@
+{
+    "function_name": "index_documents_bulk",
+    "origin": "./squad-v1.1-pt-master/contexts.json",
+    "action_name": "insert_documents",
+    "nodes": 4,
+    "shards": "2",
+    "time_python_function": 3.441099166870117,
+    "actions": [
+        {
+            "id": null,
+            "time_python": 3.4021987915039062,
+            "time": 3.141
+        }
+    ]
+}
